@@ -93,7 +93,7 @@ logger_config = {
         },
         'telegram_handler': {
             '()': TelegramBotHandler,
-            'level': 'DEBUG',
+            'level': 'WARNING',
             'chat_id': set.CHAT_ID,
             'token': set.TOKEN,
             'formatter': 'std_format',
@@ -103,12 +103,20 @@ logger_config = {
     'loggers': {
         'app_logger': {
             'level': 'DEBUG',
-            'handlers': ['telegram_handler'],
+            'handlers': ['console', 'file','email','telegram_handler'],
             # 'propagate': False
         },
         'json_logger': {
             'level': 'DEBUG',
             'handlers': ['console','file'],
+        },
+        'telega_logger': {
+            'level': 'DEBUG',
+            'handlers': ['telegram_handler'],
+        },
+        'pyautogui_logger': {
+            'level': 'DEBUG',
+            'handlers': ['console', 'file'],
         },
         'email_logger':{
             'level': 'DEBUG',
