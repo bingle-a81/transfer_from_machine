@@ -260,7 +260,7 @@ def nomura(a):
     w = pyautogui.locateCenterOnScreen('nomura1.png')
     while w==None:
         sleep(0.1)
-        w = pyautogui.locateCenterOnScreen('nomura.png')
+        w = pyautogui.locateCenterOnScreen('nomura1.png')
     # print(w)
     pyautogui.leftClick(214, 126,duration=0.25)  # первая программа
     sleep(1)
