@@ -148,9 +148,9 @@ def sitizen():
     pyautogui.leftClick(1096, 599)
     logger.debug('клик вниз')
     sleep(2)
-    w=pyautogui.locateCenterOnScreen('citizen1.png')
+    w=pyautogui.locateCenterOnScreen(r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\citizen1.png')
     if w==None:
-        w=pyautogui.locateCenterOnScreen('citizen12.png')
+        w=pyautogui.locateCenterOnScreen(r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\citizen12.png')
     print(w)
     pyautogui.moveTo(w)
     pyautogui.leftClick(w)
@@ -199,9 +199,9 @@ def sitizen():
     pyautogui.leftClick(1096, 599)
     logger.debug('клик вниз')
     sleep(2)
-    w = pyautogui.locateCenterOnScreen('citizen2.png')
+    w = pyautogui.locateCenterOnScreen(r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\citizen2.png')
     if w == None:
-        w = pyautogui.locateCenterOnScreen('citizen22.png')
+        w = pyautogui.locateCenterOnScreen(r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\citizen22.png')
     print(w)
     pyautogui.moveTo(w)
     pyautogui.leftClick(w)
@@ -257,10 +257,10 @@ def nomura(a):
         sleep(1)
     pyautogui.moveTo(300,200,duration=0.25)
     # sleep(3)
-    w = pyautogui.locateCenterOnScreen('nomura1.png')
+    w = pyautogui.locateCenterOnScreen(r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\nomura1.png')
     while w==None:
         sleep(0.1)
-        w = pyautogui.locateCenterOnScreen('nomura1.png')
+        w = pyautogui.locateCenterOnScreen(r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\nomura1.png')
     # print(w)
     pyautogui.leftClick(214, 126,duration=0.25)  # первая программа
     sleep(1)

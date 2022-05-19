@@ -15,6 +15,7 @@ def update_folder(path,folder):
     os.makedirs(aa)
 #
 def main():
+
     folders_machine_new_program = (
     'nomura20-1', 'nomura20-2', 'nomura20-3', 'nomura10', 'colchester', 'hanhwa', 'miano', 'nexturn12', 'nexturn26',
     'nomura16', 'sitizen-1', 'sitizen-2', 'NONE')
