@@ -4,34 +4,12 @@ import logging.config
 from settings import logger_config
 import re
 import json
+import get_settings as set
 
 
 logging.config.dictConfig(logger_config)
-logger = logging.getLogger('app_logger')
-logger_email=logging.getLogger('email_logger')
+logger = logging.getLogger('to_database_logger')
 
-base_path = os.path.dirname(os.path.abspath(__file__))
-config_path = os.path.join(base_path, "start.ini")
-if os.path.exists(config_path):
-    cfg = ConfigParser()
-    cfg.read(config_path, encoding='utf-8')
-else:
-    print("Конфигурация не найдена!")
-
-TO_ADDR_MAIL = cfg.get("start", "TO_ADDR_MAIL")
-PATH_FOR_CHECK = cfg.get("start", "PATH_FOR_CHECK")  # папка проги со станков
-PATH_FOR_BASE = cfg.get("start", "PATH_FOR_BASE")  # папка УП/УП
-PATH_FOR_COPY_NEW_FILES = cfg.get("start", "PATH_FOR_COPY_NEW_FILES")  # копируем новые файлы
-ARCHIVE_PROGRAMM = cfg.get("start", "ARCHIVE_PROGRAMM")
-LOG_FILE = cfg.get("start", "LOG_FILE")
-SOURCE = cfg.get("start", "source")
-
-
-# TO_ADDR_MAIL="workmy327@aol.com"
-# PATH_FOR_CHECK = 'C:\\Users\\Programmer\\Desktop\\BDUP\\STANKI\\'  # папка проги со станков
-# PATH_FOR_BASE = '//SERVER2016\\Docs\\УП\\УП-2\\'  # папка УП/УП
-# PATH_FOR_COPY_NEW_FILES = 'C:\\Users\\Programmer\\Desktop\\BDUP\\New_Program\\'  # копируем новые файлы
-# ARCHIVE_PROGRAMM = '//SERVER2016\\Docs\\УП\\АРХИВ\\BdUp\\'
 
 # ***********************************************************************
 def serch_in_check(path_for_check):  # ищем файл в папке  со станков
@@ -80,10 +58,11 @@ def find_name_prog(path):  # из программы извлекаем имя �
 # -----------------------------------------------------------------------
 
 def find_name_machine(folder_machine, path):  # ищем название станка
-    lisst = ['nomura20-1-CHANGE', 'nomura20-2-CHANGE', 'nomura20-3-CHANGE']
+    a=''
+    lisst = ['nomura20-1', 'nomura20-2', 'nomura20-3']
     if any([i == folder_machine for i in lisst]):
         a = 'NOMURA-20J2'
-    elif folder_machine == 'nomura10-CHANGE':
+    elif folder_machine == 'nomura10':
         a = 'NOMURA-10E'
     elif folder_machine == 'colchester':
         a = 'COLCHESTER'
@@ -183,7 +162,7 @@ def start(folder_machine):
     quantity_change = 0
     quantity_new = 0
 
-    for file in serch_in_check(os.path.join(PATH_FOR_CHECK, folder_machine)):  # ищем файл в папке  со станков
+    for file in serch_in_check(os.path.join(set.PATH_FOR_CHECK, folder_machine)):  # ищем файл в папке  со станков
         file_name_new = file.split('\\')[-1]  # имя файла файла со станков
         name_prog = find_name_prog(file)  # парсер названия
         lst = []  # список одинаковых файлов
@@ -194,7 +173,7 @@ def start(folder_machine):
             # print(json_data[name_prog])
             path_for_base = json_data[name_prog]
         else:
-            path_for_base = PATH_FOR_BASE  # иначе ищем в базе УП(общий путь)
+            path_for_base = set.PATH_FOR_BASE  # иначе ищем в базе УП(общий путь)
 
         for f in serch_in_base(path_for_base, file_name_new):  # ищем файл в базе программ
             name_prog_old = find_name_prog(f)  # парсер названия
@@ -211,13 +190,13 @@ def start(folder_machine):
             try:
                 date_of_change = time.strftime('%d.%m.%Y', time.gmtime(attrib(file)[0]))
                 if os.path.isdir(
-                        os.path.join(PATH_FOR_COPY_NEW_FILES, name_prog, name_of_machine, date_of_change)) == False:
-                    os.makedirs(os.path.join(PATH_FOR_COPY_NEW_FILES, name_prog, name_of_machine, date_of_change))
-                shutil.copyfile(file, os.path.join(PATH_FOR_COPY_NEW_FILES, name_prog, name_of_machine, date_of_change,
+                        os.path.join(set.PATH_FOR_COPY_NEW_FILES, name_prog, name_of_machine, date_of_change)) == False:
+                    os.makedirs(os.path.join(set.PATH_FOR_COPY_NEW_FILES, name_prog, name_of_machine, date_of_change))
+                shutil.copyfile(file, os.path.join(set.PATH_FOR_COPY_NEW_FILES, name_prog, name_of_machine, date_of_change,
                                                    file_name_new))
-                if os.path.isdir(os.path.join(ARCHIVE_PROGRAMM, name_prog, name_of_machine)) == False:
-                    os.makedirs(os.path.join(ARCHIVE_PROGRAMM, name_prog, name_of_machine))
-                shutil.copyfile(file, os.path.join(ARCHIVE_PROGRAMM, name_prog, name_of_machine, file_name_new))
+                if os.path.isdir(os.path.join(set.ARCHIVE_PROGRAMM, name_prog, name_of_machine)) == False:
+                    os.makedirs(os.path.join(set.ARCHIVE_PROGRAMM, name_prog, name_of_machine))
+                shutil.copyfile(file, os.path.join(set.ARCHIVE_PROGRAMM, name_prog, name_of_machine, file_name_new))
                 quantity_new += 1
                 logger.info(f'file {name_prog} is new!!')
 
@@ -236,9 +215,9 @@ def start(folder_machine):
                         os.makedirs(os.path.join(dir_file_old, name_of_machine, date_of_change))
                     shutil.copyfile(file, os.path.join(dir_file_old, name_of_machine, date_of_change, file_name_new))
 
-                    if os.path.isdir(os.path.join(ARCHIVE_PROGRAMM, name_prog, name_of_machine)) == False:
-                        os.makedirs(os.path.join(ARCHIVE_PROGRAMM, name_prog, name_of_machine))
-                    shutil.copyfile(file, os.path.join(ARCHIVE_PROGRAMM, name_prog, name_of_machine, file_name_new))
+                    if os.path.isdir(os.path.join(set.ARCHIVE_PROGRAMM, name_prog, name_of_machine)) == False:
+                        os.makedirs(os.path.join(set.ARCHIVE_PROGRAMM, name_prog, name_of_machine))
+                    shutil.copyfile(file, os.path.join(set.ARCHIVE_PROGRAMM, name_prog, name_of_machine, file_name_new))
 
                     dir_file_old1 = '\\'.join(file_name_old.split(('\\'))[8:10])
                     quantity_change += 1
@@ -251,9 +230,9 @@ def start(folder_machine):
             else:  # такая программа уже есть
                 quantity_old += 1
                 # logger.info(f'file {name_prog} is {file_name_old}!Dont copy!')
-                if os.path.isdir(os.path.join(ARCHIVE_PROGRAMM, name_prog, name_of_machine)) == False:
-                    os.makedirs(os.path.join(ARCHIVE_PROGRAMM, name_prog, name_of_machine))
-                shutil.copyfile(file, os.path.join(ARCHIVE_PROGRAMM, name_prog, name_of_machine, file_name_new))
+                if os.path.isdir(os.path.join(set.ARCHIVE_PROGRAMM, name_prog, name_of_machine)) == False:
+                    os.makedirs(os.path.join(set.ARCHIVE_PROGRAMM, name_prog, name_of_machine))
+                shutil.copyfile(file, os.path.join(set.ARCHIVE_PROGRAMM, name_prog, name_of_machine, file_name_new))
 
     logger.info(f'старых файлов= {quantity_old} ')
     logger.info(f'измененных файлов= {quantity_change} ')

@@ -8,6 +8,7 @@ import psutil
 import logging.config
 from settings import logger_config
 import get_settings as set
+from ctypes import windll
 
 logging.config.dictConfig(logger_config)
 logger = logging.getLogger('pyautogui_logger')
@@ -33,6 +34,9 @@ def transfer_fanuc():
     sleep(1)
 
 def Program_Transfer_Tool():
+    for process in (process for process in psutil.process_iter() if process.name() == "PttMain.exe"):
+        process.kill()
+        sleep(4)
     logger.info(f'Start fanuc')
     os.startfile(r'C:\Program Files (x86)\FANUC\Program Transfer Tool\Bin\PttMain.exe')
     sleep(3)
@@ -121,6 +125,9 @@ def Program_Transfer_Tool():
         err_logger.error(f'Программы не скинулись {a}')
 
 def sitizen():
+    for process in (process for process in psutil.process_iter() if process.name() == "FileControl.exe"):
+        process.kill()
+        sleep(4)
     os.startfile(r'C:\Program Files (x86)\FileControl\FileControl.exe')
     a = 'sitizen-1'
     logger.debug(f'Начало {a}')
@@ -230,10 +237,13 @@ def nomura(a):
     elif a=='nomura20-2':x,y=221, 155
     elif a=='nomura20-3':x,y=234, 174
     elif a=='nomura10':x,y=231, 197
+    if windll.user32.OpenClipboard(None):
+        windll.user32.EmptyClipboard()
+        windll.user32.CloseClipboard()
     logger.debug(f'Начало {a}')
     pyautogui.leftClick(1914, 1067,duration=0.25)
     pyautogui.moveTo(719, 974,duration=0.25)
-    sleep(1)
+    sleep(2)
     pyautogui.doubleClick(719, 974,button='LEFT',duration=0.25)
     # pyautogui.doubleClick(button="LEFT")
     sleep(5)
@@ -246,7 +256,12 @@ def nomura(a):
         pyautogui.doubleClick(214, 126,button='LEFT',duration=0.25)
         sleep(1)
     pyautogui.moveTo(300,200,duration=0.25)
-    sleep(5)
+    # sleep(3)
+    w = pyautogui.locateCenterOnScreen('nomura1.png')
+    while w==None:
+        sleep(0.1)
+        w = pyautogui.locateCenterOnScreen('nomura.png')
+    # print(w)
     pyautogui.leftClick(214, 126,duration=0.25)  # первая программа
     sleep(1)
     keyb.press('shift')
@@ -266,14 +281,17 @@ def nomura(a):
     pyautogui.leftClick(760, 712,duration=0.25)
     sleep(1)
     pyautogui.leftClick(860, 462,duration=0.25)
-    sleep(20)
-    pyautogui.leftClick(1898, 5,duration=0.25)
-    pyautogui.leftClick(1898, 5,duration=0.25)
     sleep(10)
+    pyautogui.leftClick(1898, 5,duration=0.25)
+    pyautogui.leftClick(1898, 5,duration=0.25)
+    sleep(2)
     if os.listdir(os.path.join(set.SOURCE,a))!=[]:
         logger.debug(f'Конец {a}')
     else:
         err_logger.error(f'Программы не скинулись {a}')
+    if windll.user32.OpenClipboard(None):
+        windll.user32.EmptyClipboard()
+        windll.user32.CloseClipboard()
 
 
 # ***********************************************************************

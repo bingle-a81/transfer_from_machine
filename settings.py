@@ -118,6 +118,10 @@ logger_config = {
             'level': 'DEBUG',
             'handlers': ['console', 'file'],
         },
+        'to_database_logger': {
+            'level': 'DEBUG',
+            'handlers': ['console', 'file'],
+        },
         'email_logger':{
             'level': 'DEBUG',
             'handlers': ['email'],
