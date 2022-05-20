@@ -16,12 +16,9 @@ def chek_json(path_for_base):
     counter_start = time.perf_counter()
     logger.info( f'Проверка JSON файла начата в {time.strftime("%H:%M:%S", time_start)}\n')
     logger.info(f'****************************')
-    if os.path.isfile("guide.json")==False:
-        with open("guide.json",'w') as f:
+    if os.path.isfile(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json")==False:
+        with open(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json",'w') as f:
             f.write(r'{ }')
-
-
-
     for file in serch_in_check(path_for_base):  #ищем файл в папке  со станков
         file_name_new = file.split('\\')[-1]  # имя файла файла со станков
         # print(file_name_new)

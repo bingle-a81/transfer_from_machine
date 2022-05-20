@@ -15,6 +15,8 @@ def update_folder(path,folder):
     os.makedirs(aa)
 #
 def main():
+    logger5=logging.getLogger('telega_logger')
+    logger5.error('Start script')
     folders_machine_new_program = (
     'nomura20-1', 'nomura20-2', 'nomura20-3', 'nomura10', 'colchester', 'hanhwa', 'miano', 'nexturn12', 'nexturn26',
     'nomura16', 'sitizen-1', 'sitizen-2', 'NONE')
@@ -68,12 +70,13 @@ def main():
     counter_end1 = time.perf_counter()
     # ----------отсылаем письмо------------------------------------
     logger.info( f'Время проверки {time.strftime("%H:%M:%S", time.gmtime(counter_end1 - counter_start1))} \n')
-
+    logger5.error('Finish script')
     logger1 = logging.getLogger('email_logger')#debag file в почту
     with open(set.LOG_FILE, 'r') as r:
         text = r.read()
     logger1.error(text)
 
+    # os.system('shutdown -r -t 0')
 
 # -----------------------------------------------------------------------
 if __name__ == '__main__':
