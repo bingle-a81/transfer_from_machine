@@ -15,7 +15,6 @@ def update_folder(path,folder):
     os.makedirs(aa)
 #
 def main():
-
     folders_machine_new_program = (
     'nomura20-1', 'nomura20-2', 'nomura20-3', 'nomura10', 'colchester', 'hanhwa', 'miano', 'nexturn12', 'nexturn26',
     'nomura16', 'sitizen-1', 'sitizen-2', 'NONE')
@@ -28,7 +27,7 @@ def main():
     counter_start2 = time.perf_counter()
 
     for a in folders_machine_new_program:
-        if a!='nomura16':
+        if (a!='nomura16') or (a!='NONE') :
             update_folder(set.SOURCE,a)
     for a in folders_machine_new_program:
         update_folder(set.PATH_FOR_CHECK,a)
@@ -70,10 +69,10 @@ def main():
     # ----------отсылаем письмо------------------------------------
     logger.info( f'Время проверки {time.strftime("%H:%M:%S", time.gmtime(counter_end1 - counter_start1))} \n')
 
-    logger1 = logging.getLogger('telega_logger')#debag file в телегу
+    logger1 = logging.getLogger('email_logger')#debag file в почту
     with open(set.LOG_FILE, 'r') as r:
         text = r.read()
-    logger1.warning(text)
+    logger1.error(text)
 
 
 # -----------------------------------------------------------------------
