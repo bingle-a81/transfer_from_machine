@@ -76,7 +76,7 @@ def main():
         text = r.read()
     logger1.error(text)
 
-    # os.system('shutdown -r -t 0')
+    os.system('shutdown -r -t 100')
 
 # -----------------------------------------------------------------------
 if __name__ == '__main__':

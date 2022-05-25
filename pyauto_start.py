@@ -362,10 +362,10 @@ def check_folder(a, flag, i):
     else:
         flag = True
         hh=2
-        # err_logger.error(f'Программы не скинулись {a} осталось {hh - i} попытки')
+        logger.info(f'Программы не скинулись {a} осталось {hh - i} попытки')
         if i == 3:
             flag = False
-            err_logger.error(f'количество попыток закончилось {a}')
+            logger.info(f'количество попыток закончилось {a}')
     return flag
 
 def centr_picture(a,path):

@@ -78,7 +78,6 @@ logger_config = {
         'file': {
             '()': MegaHandler,
             'level': 'INFO',
-            # 'filename':'//SERVER2016\\Docs\\УП\\АРХИВ\\BdUp\\debug.log',
             'filename': set.LOG_FILE,
             'formatter': 'std_format',
         },
