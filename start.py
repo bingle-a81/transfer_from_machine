@@ -29,7 +29,9 @@ def main():
     counter_start2 = time.perf_counter()
 
     for a in folders_machine_new_program:
-        if (a!='nomura16') or (a!='NONE') :
+        if (a=='nomura16') or (a=='NONE') :
+            pass
+        else:
             update_folder(set.SOURCE,a)
     for a in folders_machine_new_program:
         update_folder(set.PATH_FOR_CHECK,a)
