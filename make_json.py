@@ -19,6 +19,7 @@ def chek_json(path_for_base):
     if os.path.isfile(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json")==False:
         with open(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json",'w') as f:
             f.write(r'{ }')
+
     for file in serch_in_check(path_for_base):  #ищем файл в папке  со станков
         file_name_new = file.split('\\')[-1]  # имя файла файла со станков
         # print(file_name_new)
@@ -31,9 +32,9 @@ def chek_json(path_for_base):
               '__meta__','xlsx','PNG','tcl','dll','frw','bak','out','cdw','log','m3d','tif','rar','xls','spw','JPG']]
         if any(a) != True:
             name_prog = find_name_prog(file)  # парсер названия
-            jsonFile = open("guide.json", "r", encoding="utf-8")  # Open the JSON file for reading
-            data = json.load(jsonFile)  # Read the JSON into the buffer
-            jsonFile.close()  # Close the JSON file
+            with open(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json", "r", encoding="utf-8") as jsonFile:
+                data = json.load(jsonFile)  # Read the JSON into the buffer
+
 
             if name_prog not in data:
                 data[name_prog] = dir_file
@@ -41,9 +42,8 @@ def chek_json(path_for_base):
             else:
                 continue
             ## Save our changes to JSON file
-            jsonFile = open("guide.json", "w+", encoding="utf-8")
-            jsonFile.write(json.dumps(data,indent=4,ensure_ascii=True))
-            jsonFile.close()
+            with open(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json", "w+", encoding="utf-8") as jsonFile:
+                jsonFile.write(json.dumps(data,indent=4,ensure_ascii=True))
         else:
             pass
 

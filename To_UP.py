@@ -166,9 +166,13 @@ def start(folder_machine):
         file_name_new = file.split('\\')[-1]  # имя файла файла со станков
         name_prog = find_name_prog(file)  # парсер названия
         lst = []  # список одинаковых файлов
-        jsonFile = open("guide.json", "r", encoding="utf-8")  # Open the JSON file for reading
-        json_data = json.load(jsonFile)  # Read the JSON into the buffer
-        jsonFile.close()
+        with open(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json", "r",
+                  encoding="utf-8") as jsonFile:
+            json_data = json.load(jsonFile)
+
+        #jsonFile = open("guide.json", "r", encoding="utf-8")  # Open the JSON file for reading
+        #json_data = json.load(jsonFile)  # Read the JSON into the buffer
+        #jsonFile.close()
         if name_prog in json_data:  # если имя файла есть в json-файле - то путь берем оттуда
             # print(json_data[name_prog])
             path_for_base = json_data[name_prog]

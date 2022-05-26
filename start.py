@@ -22,7 +22,7 @@ def main():
     'nomura16', 'sitizen-1', 'sitizen-2', 'NONE')
     logging.config.dictConfig(logger_config)
     logger = logging.getLogger('app_logger')
-    counter_start1 = time.perf_counter()
+
     if os.path.isfile(set.LOG_FILE): os.remove(set.LOG_FILE)  # log файл
 
     logger.info(f'Start Transfer_from_machine\n')
@@ -46,6 +46,7 @@ def main():
     pyauto_start.sitizen()
     logger.info((f'End sitizen\n'))
     logger.info(f'End Transfer_from_machine \n')
+    logger5.error('End Transfer_from_machine')
     logger.info(f'Start join nomura')
     for a in folders_machine_new_program[:4]:
         logger.info(f'Start join {a}')
@@ -61,6 +62,8 @@ def main():
     logger.info("Start json")
     chek_json(set.PATH_FOR_BASE)
     logger.info("end json")
+    logger5.error('End json')
+
     logger.info("Start copy to database ")
     for x in folders_machine_new_program:
         copy_to_database(x)
@@ -72,7 +75,7 @@ def main():
     counter_end1 = time.perf_counter()
     # ----------отсылаем письмо------------------------------------
     logger.info( f'Время проверки {time.strftime("%H:%M:%S", time.gmtime(counter_end1 - counter_start1))} \n')
-    logger5.error('Finish script')
+    logger5.error(f'Finish script\nВремя проверки {time.strftime("%H:%M:%S", time.gmtime(counter_end1 - counter_start1))} \n')
     logger1 = logging.getLogger('email_logger')#debag file в почту
     with open(set.LOG_FILE, 'r') as r:
         text = r.read()
