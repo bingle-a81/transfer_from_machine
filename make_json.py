@@ -29,7 +29,7 @@ def chek_json(path_for_base):
         a = [file.endswith(a) for a in
              ['jpg', 'pdf', 'bin', 'PDF', 'doc', 'zip', 'lnk', 'exe', 'db', 'docx', 'png', 'bmp', 'ICO', 'bat', '0L',
               '0C', 'gif', 'GIF','bmp','vbs','css','dtd','htm','htm','pptx','iso','sfv','prt','x_b','STEP','ipt','cdd','djvu',
-              '__meta__','xlsx','PNG','tcl','dll','frw','bak','out','cdw','log','m3d','tif','rar','xls','spw','JPG']]
+              '__meta__','xlsx','PNG','tcl','dll','frw','bak','out','cdw','log','m3d','tif','rar','xls','spw','JPG','7z']]
         if any(a) != True:
             name_prog = find_name_prog(file)  # парсер названия
             with open(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json", "r", encoding="utf-8") as jsonFile:
