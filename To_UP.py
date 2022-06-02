@@ -37,13 +37,12 @@ def serch_in_base(path_for_base, file_name):  # ищем файл в базе п
 def find_name_prog(path):  # из программы извлекаем имя файла в скобках
     with open(path, 'r') as r:  # только чтение файла
         i = 0
-        while i < 4:
-
+        while i < 3:
             st = r.readline()  # чтение текстового файла построчно
             i += 1
             if ('(' in st) and (')' in st):
                 f_name = st[(st.index('(') + 1):(st.index(')'))].strip()
-                f_name = correction_of_the_line(f_name)
+                f_name = correction_of_the_line(f_name).strip()
                 # logger.debug(f'name++{f_name}')
                 return f_name
                 break
@@ -169,10 +168,6 @@ def start(folder_machine):
         with open(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json", "r",
                   encoding="utf-8") as jsonFile:
             json_data = json.load(jsonFile)
-
-        #jsonFile = open("guide.json", "r", encoding="utf-8")  # Open the JSON file for reading
-        #json_data = json.load(jsonFile)  # Read the JSON into the buffer
-        #jsonFile.close()
         if name_prog in json_data:  # если имя файла есть в json-файле - то путь берем оттуда
             # print(json_data[name_prog])
             path_for_base = json_data[name_prog]
@@ -186,7 +181,7 @@ def start(folder_machine):
                 lst.append(file_name_old)  # добовляем в список
             else:
                 continue
-
+        print(len(lst))
         name_of_machine = find_name_machine(folder_machine, file)  # парсер станка
         # logger.error(f'machine={name_of_machine}')
 

@@ -219,7 +219,7 @@ def sitizen():
         pyautogui.leftClick(1012, 572,duration=0.25)
         sleep(2)
         pyautogui.leftClick(927, 615,duration=0.25)
-        sleep(40)
+        sleep(55)
         for process in (process for process in psutil.process_iter() if process.name() == "FileControl.exe"):
             process.kill()
         ii += 1
@@ -278,7 +278,7 @@ def sitizen():
         pyautogui.leftClick(1012, 572)
         sleep(2)
         pyautogui.leftClick(927, 615)
-        sleep(40)
+        sleep(55)
         for process in (process for process in psutil.process_iter() if process.name() == "FileControl.exe"):
             process.kill()
         ii +=1
@@ -377,7 +377,7 @@ def centr_picture(a,path):
         i += 0.1
         print(i)
         if i > 2:
-            err_logger.error(f'нет подключения к станку{a}')
+            logger.error(f'нет подключения к станку{a}')
             break
     pyautogui.moveTo(w)
     pyautogui.leftClick(w)
