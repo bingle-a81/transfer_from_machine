@@ -14,7 +14,6 @@ def serch_in_check_nomura(path_for_check):  # ищем файл в папке  �
             yield adress_file_in_check  # возвращаем адрес файла
 
 def common_files_nomura(path_for_check_join,machine):
-    logger.info(f'Start join {machine}')
     if os.path.isdir(os.path.join(set.PATH_FOR_CHECK,machine))== False:
         os.makedirs(os.path.join(set.PATH_FOR_CHECK,machine))
     spisok = []
@@ -51,11 +50,10 @@ def common_files_nomura(path_for_check_join,machine):
                     logger.info(f'Join {file_name}')
         else:
             logger.info(f'{file_name} in spisok')
-    logger.info(f'End join {machine}')
+
 
 
 def trans_other_macine(path_for_check_join,machine):
-    logger.info(f'Start join {machine}')
     if os.path.isdir(os.path.join(set.PATH_FOR_CHECK,machine))== False:
         os.makedirs(os.path.join(set.PATH_FOR_CHECK,machine))
     path_folder = os.path.join(path_for_check_join, machine)
@@ -70,7 +68,7 @@ def trans_other_macine(path_for_check_join,machine):
             shutil.copy(file,os.path.join(set.PATH_FOR_CHECK,machine,file_name))  # клонируем папки в папку для разбора
         else:
             logger.info(f'{file_name} in spisok')
-    logger.info(f'End join {machine}')
+
 
 
 # ***********************************************************************

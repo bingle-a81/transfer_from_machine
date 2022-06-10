@@ -28,6 +28,11 @@ def main():
     counter_start1 = time.perf_counter()
 
     if os.path.isfile(set.LOG_FILE): os.remove(set.LOG_FILE)  # log файл
+    if (time.time()) - os.path.getmtime(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json") > (
+            60 * 60 * 24 * 7):
+        if os.path.isfile(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json"): os.remove(
+            r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json")
+
 
     logger.info(f'Start Transfer_from_machine\n')
     counter_start2 = time.perf_counter()
