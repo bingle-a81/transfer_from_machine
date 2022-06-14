@@ -10,6 +10,7 @@ from settings import logger_config
 import get_settings as set
 from ctypes import windll
 
+
 logging.config.dictConfig(logger_config)
 logger = logging.getLogger('pyautogui_logger')
 err_logger=logging.getLogger('telega_logger')
@@ -287,72 +288,142 @@ def sitizen():
 
 
 def nomura(a):
-    picture=r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture\nomura1.png'
-    flag=True
-    ii=0
-    while flag:
-        if a== 'nomura20-1':x,y=214, 126
-        elif a=='nomura20-2':x,y=221, 155
-        elif a=='nomura20-3':x,y=234, 174
-        elif a=='nomura10':x,y=231, 197
-        if windll.user32.OpenClipboard(None):
-            windll.user32.EmptyClipboard()
-            windll.user32.CloseClipboard()
-        logger.info(f'Начало {a}')
-        pyautogui.leftClick(1914, 1067,duration=0.25)
-        pyautogui.moveTo(719, 974,duration=0.25)
-        sleep(2)
-        pyautogui.doubleClick(719, 974,button='LEFT',duration=0.25)
-        # pyautogui.doubleClick(button="LEFT")
-        sleep(5)
-        keyb.press_and_release('win + up')  # full screen
-        pyautogui.moveTo(x,y)
-        sleep(3)
-        pyautogui.doubleClick(x, y, button='LEFT',duration=0.25)#координаты папки
-        sleep(1)
-        for x in range(3):
-            pyautogui.doubleClick(214, 126,button='LEFT',duration=0.25)
-            sleep(1)
-        pyautogui.moveTo(300,200,duration=0.25)
-        # sleep(3)
-        w = pyautogui.locateCenterOnScreen(picture)
-        i=0
-        while w==None:
-            sleep(0.1)
-            w = pyautogui.locateCenterOnScreen(picture)
-            i+=0.1
-            print(i)
-            if i>2 :
-                break
-        # print(w)
-        pyautogui.leftClick(214, 126,duration=0.25)  # первая программа
-        sleep(1)
-        keyb.press('shift')
-        sleep(1)
-        pyautogui.moveTo(228, 356,duration=0.25)
-        pyautogui.leftClick(228, 356)  # последняя программа
-        keyb.release('shift')
-        sleep(1)
-        keyb.press_and_release('ctrl + c')
-        sleep(1)
-        os.startfile(os.path.join(set.SOURCE,a))
-        sleep(3)
-        keyb.press_and_release('win + up')  # full screen
-        sleep(3)
-        keyb.press_and_release('ctrl + v')
-        sleep(3)
-        pyautogui.leftClick(760, 712,duration=0.25)
-        sleep(1)
-        pyautogui.leftClick(860, 462,duration=0.25)
-        sleep(10)
-        pyautogui.leftClick(1898, 5,duration=0.25)
-        pyautogui.leftClick(1898, 5,duration=0.25)
-        sleep(2)
-        ii +=1
-        flag = check_folder(a, flag, ii)
+    picture_link=r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture'
+    picture_lst=(os.path.join(picture_link, 'hat1.png'),os.path.join(picture_link, 'hat2.png'),os.path.join(picture_link, 'hat3.png'))
+
+    if a == 'nomura20-1':
+        pic_machine_lst = (os.path.join(picture_link, 'nom1.png'), os.path.join(picture_link, 'nom11.png'))
+    elif a == 'nomura20-2':
+        pic_machine_lst = (os.path.join(picture_link, 'nom2.png'), os.path.join(picture_link, 'nom22.png'))
+    elif a == 'nomura20-3':
+        pic_machine_lst = (os.path.join(picture_link, 'nom3.png'), os.path.join(picture_link, 'nom33.png'))
+    elif a == 'nomura10':
+        pic_machine_lst = (os.path.join(picture_link, 'nom10.png'), os.path.join(picture_link, 'nom110.png'))
+
     if windll.user32.OpenClipboard(None):
         windll.user32.EmptyClipboard()
         windll.user32.CloseClipboard()
+
+    logger.info(f'Начало {a}')
+    pyautogui.leftClick(1914, 1067,duration=0.25)
+    logger.debug(f'свернуть все')
+    pyautogui.moveTo(719, 974,duration=0.25)
+    sleep(2)
+    pyautogui.doubleClick(719, 974,button='LEFT',duration=0.25)
+    logger.debug(f'открыть nc exploer')
+    # pyautogui.doubleClick(button="LEFT")
+    sleep(5)
+    keyb.press_and_release('win + up')  # full screen
+    logger.debug(f'full screen {a}')
+    sleep(1)
+    pic_machine = next((item for item in list(map(lambda x: pyautogui.locateCenterOnScreen(x),pic_machine_lst)) if item is not None), None)
+    logger.debug(f'вывод = {pic_machine}')
+    i=0
+    while pic_machine==None:
+        sleep(0.1)
+        for x in  pic_machine_lst:
+            pic_machine=pyautogui.locateCenterOnScreen(x)
+            if pic_machine!=None:
+                break
+            else:
+                i += 1
+                logger.debug(f'счетчик {i} pic2={pic_machine}')
+        if i>10 :
+            logger.debug(f'станок {a} не открывается')
+            return
+    pyautogui.moveTo(pic_machine)
+    pyautogui.doubleClick(pic_machine,button='LEFT',duration=0.25)
+    # pyautogui.moveTo(x,y)
+    # sleep(3)
+    # pyautogui.doubleClick(x, y, button='LEFT',duration=0.25)#координаты папки
+    sleep(1)
+    for x in range(3):
+        pyautogui.doubleClick(214, 126,button='LEFT',duration=0.25)
+        sleep(1)
+    pyautogui.moveTo(300,200,duration=0.25)
+    # sleep(3)
+
+    pict_hat = next((item for item in list(map(lambda x: pyautogui.locateCenterOnScreen(x), picture_lst)) if item is not None), None)
+    logger.debug(f'шапка таблицы {pict_hat}')
+    while pict_hat == None:
+        sleep(0.1)
+        for x in  picture_lst:
+            pict_hat=pyautogui.locateCenterOnScreen(x)
+            if pict_hat!=None:
+                logger.debug(f'шапка таблицы найдена {pict_hat}')
+                break
+            else:
+                i += 1
+                logger.debug(f'поиск шапки {i}')
+        if i > 3:
+            logger.debug(f'шапка таблицы не найдена {pict_hat}')
+            break
+    i=0
+    if pict_hat==None:
+        logger.debug(f'выбор режима таблицы')
+        sleep(1.5)
+        pyautogui.moveTo(1856, 71, duration=0.25)
+        pyautogui.leftClick(1856, 71, duration=0.25)
+        pic_table=pyautogui.locateCenterOnScreen(r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture\table.png')
+        while pic_table==None:
+            pic_table = pyautogui.locateCenterOnScreen(
+                r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture\table.png')
+            i += 1
+            if i > 5:
+                logger.debug(f'выбор режима таблицы не открывается')
+                return
+        else:
+            pyautogui.moveTo(pic_table, duration=0.25)
+            pyautogui.leftClick(pic_table, duration=0.25)
+            logger.debug(f'выбор режима таблицы готово')
+
+        logger.debug(f'выбор шапки дата изменения таблицы')
+        izm_table=pyautogui.locateCenterOnScreen(r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture\izm_table.png')
+        i=0
+        while izm_table==None:
+            izm_table = pyautogui.locateCenterOnScreen(
+                r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture\izm_table.png')
+            i += 1
+            if i > 5:
+                logger.debug(f'не правильная шапка дата изменения таблицы - не найдено')
+                break
+        else:
+            pyautogui.moveTo(izm_table, duration=0.25)
+            pyautogui.leftClick(izm_table, duration=0.25)
+            logger.debug(f'правильная шапка дата изменения таблицы готово')
+
+        pict_hat = next(
+            (item for item in list(map(lambda x: pyautogui.locateCenterOnScreen(x), picture_lst)) if item is not None),
+            None)
+        if pict_hat==None:
+            logger.debug(f'шапка таблицы не найдена вторая проверка {pict_hat}')
+            return
+        else:
+            logger.debug(f'шапка таблицы вторая проверка {pict_hat}')
+    pyautogui.leftClick(214, 126,duration=0.25)  # первая программа
+    sleep(1)
+    keyb.press('shift')
+    sleep(1)
+    pyautogui.moveTo(228, 356,duration=0.25)
+    pyautogui.leftClick(228, 356)  # последняя программа
+    keyb.release('shift')
+    sleep(1)
+    keyb.press_and_release('ctrl + c')
+    sleep(1)
+    os.startfile(os.path.join(set.SOURCE,a))
+    sleep(3)
+    keyb.press_and_release('win + up')  # full screen
+    sleep(3)
+    keyb.press_and_release('ctrl + v')
+    sleep(3)
+    pyautogui.leftClick(760, 712,duration=0.25)
+    sleep(1)
+    pyautogui.leftClick(860, 462,duration=0.25)
+    sleep(10)
+    pyautogui.leftClick(1898, 5,duration=0.25)
+    pyautogui.leftClick(1898, 5,duration=0.25)
+    sleep(2)
+
 
 
 def check_folder(a, flag, i):
@@ -361,7 +432,7 @@ def check_folder(a, flag, i):
         logger.info(f'Конец {a}')
     else:
         flag = True
-        hh=2
+        hh=3
         logger.info(f'Программы не скинулись {a} осталось {hh - i} попытки')
         if i == 3:
             flag = False

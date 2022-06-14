@@ -16,7 +16,7 @@ def update_folder(path,folder):
 #
 def main():
     logger5=logging.getLogger('telega_logger')
-    logger5.error('Start script')
+    # logger5.error('Start script')
 
     folders_machine_new_program = (
     'nomura20-1', 'nomura20-2', 'nomura20-3', 'nomura10', 'colchester', 'hanhwa', 'miano', 'nexturn12', 'nexturn26',
@@ -28,10 +28,10 @@ def main():
     counter_start1 = time.perf_counter()
 
     if os.path.isfile(set.LOG_FILE): os.remove(set.LOG_FILE)  # log файл
-    if (time.time()) - os.path.getmtime(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json") > (
-            60 * 60 * 24 * 7):
-        if os.path.isfile(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json"): os.remove(
-            r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json")
+    if os.path.isfile(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json"):
+        if (time.time()) - os.path.getmtime(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json") > (
+                60 * 60 * 24 * 7):
+            os.remove(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json")
 
 
     logger.info(f'Start Transfer_from_machine\n')
@@ -49,7 +49,12 @@ def main():
 
     logger.info((f'Start nomura\n'))
     for a in folders_machine_new_program[:4]:
-        pyauto_start.nomura(a)
+        flag = True
+        ii = 0
+        while flag:
+            pyauto_start.nomura(a)
+            ii +=1
+            flag = pyauto_start.check_folder(a, flag, ii)
     logger.info((f'End nomura\n'))
 
     logger.info((f'Start fanuc\n'))
