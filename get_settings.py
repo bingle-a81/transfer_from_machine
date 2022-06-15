@@ -23,6 +23,7 @@ PATH_FOR_BASE = cfg.get("start", "PATH_FOR_BASE")  # папка УП/УП
 PATH_FOR_COPY_NEW_FILES = cfg.get("start", "PATH_FOR_COPY_NEW_FILES")  # копируем новые файлы
 ARCHIVE_PROGRAMM = cfg.get("start", "ARCHIVE_PROGRAMM")
 LOG_FILE = cfg.get("start", "LOG_FILE")
+LOG_FILE_DEBUG = cfg.get("start", "LOG_FILE_DEBUG")
 SOURCE = cfg.get("start", "source")
 
 CHAT_ID=cfg.get("telega", "chat_id")

@@ -62,8 +62,7 @@ def update_folder(path, folder):
 #
 def main():
     logger5 = logging.getLogger('telega_logger')
-    # logger5.error('Start script')
-
+    logger5.error('Start script')
     folders_machine_new_program = (
         'nomura20-1', 'nomura20-2', 'nomura20-3', 'nomura10', 'colchester', 'hanhwa', 'miano', 'nexturn12', 'nexturn26',
         'nomura16', 'sitizen-1', 'sitizen-2', 'NONE')
@@ -74,6 +73,8 @@ def main():
     counter_start1 = time.perf_counter()
 
     if os.path.isfile(set.LOG_FILE): os.remove(set.LOG_FILE)  # log файл
+    if os.path.isfile(set.LOG_FILE_DEBUG): os.remove(set.LOG_FILE_DEBUG)  # log файл
+
     if os.path.isfile(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json"):
         if (time.time()) - os.path.getmtime(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json") > (
                 60 * 60 * 24 * 7):
@@ -88,27 +89,6 @@ def main():
         else:
             update_folder(set.SOURCE, machine)
             update_folder(set.PATH_FOR_CHECK, machine)
-
-    # logger.info((f'Start nomura\n'))
-    # for a in folders_machine_new_program[:4]:
-    #     flag = True
-    #     ii = 0
-    #     while flag:
-    #         pyauto_start.nomura(a)
-    #         ii +=1
-    #         flag = pyauto_start.check_folder(a, flag, ii)
-    # logger.info((f'End nomura\n'))
-
-    # logger.info((f'Start fanuc\n'))
-    # for a in folders_machine_new_program[4:9]:
-    #     flag = True
-    #     ii = 0
-    #     while flag:
-    #         pyauto_start.program_transfer_tool(a)
-    #         ii +=1
-    #         flag = pyauto_start.check_folder(a, flag, ii)
-    # logger.info((f'End fanuc\n'))
-
     for machine in folders_machine_new_program:
         if (machine == 'nomura16') or (machine == 'NONE'):
             pass
@@ -118,7 +98,7 @@ def main():
             number_of_attempts = 3
             while flag:
                 logger.info((f'Start {machine}\n'))
-                pyauto_start.tr_to_machine(machine)
+                trans_from_machine(machine)
                 count_attempt += 1
                 if os.listdir(os.path.join(set.SOURCE, machine)) != []:
                     flag = False
@@ -127,7 +107,7 @@ def main():
                     flag = True
                     logger.info(
                         f'Программы не скинулись {machine} осталось {number_of_attempts - count_attempt} попытки')
-                    if ii == number_of_attempts:
+                    if count_attempt == number_of_attempts:
                         flag = False
                         logger.info(f'количество попыток закончилось {machine}')
             logger.info((f'End {machine}\n'))

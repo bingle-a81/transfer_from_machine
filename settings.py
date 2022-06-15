@@ -14,7 +14,11 @@ class TelegramBotHandler(logging.Handler):
     def emit(self, record: LogRecord):
         message = self.format(record)
         bot = telebot.TeleBot(self.token)
-        bot.send_message(self.chat_id,message)
+        try:
+            bot.send_message(self.chat_id,message)
+        except:
+            pass
+
 
 class MegaHandler(logging.Handler):
     def __init__(self, filename):
@@ -81,6 +85,12 @@ logger_config = {
             'filename': set.LOG_FILE,
             'formatter': 'std_format',
         },
+        'file1': {
+            '()': MegaHandler,
+            'level': 'DEBUG',
+            'filename': set.LOG_FILE_DEBUG,
+            'formatter': 'std_format',
+        },
         'email':{
             '()':MegaEmail,
             'level': 'ERROR',
@@ -115,7 +125,7 @@ logger_config = {
         },
         'pyautogui_logger': {
             'level': 'DEBUG',
-            'handlers': ['console', 'file'],
+            'handlers': ['console', 'file', 'file1'],
         },
         'to_database_logger': {
             'level': 'DEBUG',

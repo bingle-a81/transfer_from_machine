@@ -13,7 +13,7 @@ from ctypes import windll
 
 logging.config.dictConfig(logger_config)
 logger = logging.getLogger('pyautogui_logger')
-err_logger=logging.getLogger('telega_logger')
+# err_logger=logging.getLogger('telega_logger')
 
 
 
