@@ -15,6 +15,9 @@ logging.config.dictConfig(logger_config)
 logger = logging.getLogger('pyautogui_logger')
 err_logger=logging.getLogger('telega_logger')
 
+
+
+
 def transfer_fanuc():
     sleep(0.5)
     pyautogui.leftClick(294, 461,duration=0.25)#первая программа
@@ -38,267 +41,143 @@ def transfer_fanuc():
     pyautogui.leftClick(1051, 593,duration=0.25)
     sleep(1)
 
-def Program_Transfer_Tool():
-    picture=r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture\fanuc_last_mod.png'
+def program_transfer_tool(a,dict1):
+    # if a == 'nexturn26':
+    #     dict1={'machine':(106, 464),'part1':(136, 588),'part2':(136, 603)}
+    # elif a=='hanhwa':
+    #     dict1 = {'machine': (106, 477), 'part1': (92, 510), 'part2': (92,528)}
+    # elif a=='miano':
+    #     dict1 = {'machine': (106, 495), 'part1': (92, 525), 'part2': (92, 540)}
+    # elif a=='colchester':
+    #     dict1 = {'machine': (106, 513), 'part1': (92, 541), 'part2': (92, 540)}
+    # elif a=='nexturn12':
+    #     dict1 = {'machine': (106, 549), 'part1': (92, 574), 'part2': (92, 591)}
+    # else:
+    #     return False
+
+    picture = r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture\fanuc_last_mod.png'
     for process in (process for process in psutil.process_iter() if process.name() == "PttMain.exe"):
         process.kill()
-        sleep(4)
-    logger.info(f'Start fanuc')
-    ii=0
-    flag=True
-    while flag:
-        os.startfile(r'C:\Program Files (x86)\FANUC\Program Transfer Tool\Bin\PttMain.exe')
-        sleep(6)
-        keyb.press_and_release('win + up')#full screen
-        sleep(2)
-        a='nexturn26'
-        logger.info(f'Начало {a}')
-        pyautogui.moveTo(106, 464)
-        pyautogui.leftClick(106, 464,duration=0.25)#открываем next26
-        sleep(2)
-        pyautogui.moveTo(136, 588)
-        pyautogui.leftClick(136, 588,duration=0.25)#part1
-        sleep(2)
-        centr_picture(a,picture)
-        # pyautogui.leftClick(1074, 447,duration=0.25)#последняя модификация
-        # sleep(3)
-        transfer_fanuc()
-        pyautogui.leftClick(136,603,duration=0.25) # part2
+    sleep(4)
+    os.startfile(r'C:\Program Files (x86)\FANUC\Program Transfer Tool\Bin\PttMain.exe')
+    sleep(6)
+    keyb.press_and_release('win + up')#full screen
+    sleep(2)
+    logger.info(f'Начало {a}')
+    pyautogui.moveTo(dict1.get('machine'))
+    pyautogui.leftClick(dict1.get('machine'),duration=0.25)#открываем next26
+    sleep(2)
+    pyautogui.moveTo(dict1.get('part1'))
+    pyautogui.leftClick(dict1.get('part1'), duration=0.25)  # part1
+    sleep(2)
+    centr_picture(a, picture)
+    # pyautogui.leftClick(1074, 447,duration=0.25)#последняя модификация
+    # sleep(3)
+    transfer_fanuc()
+    if a!='colchester':
+        pyautogui.moveTo(dict1.get('part2'))
+        pyautogui.leftClick(dict1.get('part2'), duration=0.25)  # part2
         sleep(3)
         transfer_fanuc()
-        pyautogui.leftClick(1142, 606, duration=0.25)
-        sleep(2)
-        pyautogui.leftClick(28, 463,duration=0.25)
-        for process in (process for process in psutil.process_iter() if process.name() == "PttMain.exe"):
-            process.kill()
-        sleep(3)
-        ii += 1
-        flag = check_folder(a, flag, ii)
-    #--------------------------------------
-    ii=0
-    flag=True
-    while flag:
-        a='hanhwa'
-        logger.info(f'Начало {a}')
-        os.startfile(r'C:\Program Files (x86)\FANUC\Program Transfer Tool\Bin\PttMain.exe')
-        sleep(6)
-        keyb.press_and_release('win + up')#full screen
-        sleep(2)
-        pyautogui.leftClick(106, 477,duration=0.25) # hanhwa
-        sleep(3)
-        pyautogui.leftClick(92, 510,duration=0.25) # part1
-        sleep(2)
-        centr_picture(a, picture)
-        transfer_fanuc()
-        pyautogui.leftClick(92,528,duration=0.25) # part2
-        sleep(3)
-        transfer_fanuc()
-        pyautogui.leftClick(28, 479,duration=0.25)
-        for process in (process for process in psutil.process_iter() if process.name() == "PttMain.exe"):
-            process.kill()
-        sleep(3)
-        ii += 1
-        flag = check_folder(a, flag, ii)
+    # pyautogui.leftClick(dict1.get('k4'), duration=0.25)
+    sleep(2)
+    # pyautogui.leftClick(dict1.get('k5'), duration=0.25)
+    for process in (process for process in psutil.process_iter() if process.name() == "PttMain.exe"):
+        process.kill()
+    sleep(3)
+    return True
 
-    #--------------------------------------
-    ii=0
-    flag=True
-    while flag:
-        a='miano'
-        logger.info(f'Начало {a}')
-        os.startfile(r'C:\Program Files (x86)\FANUC\Program Transfer Tool\Bin\PttMain.exe')
-        sleep(6)
-        keyb.press_and_release('win + up')#full screen
-        sleep(2)
-        pyautogui.leftClick(106, 495,duration=0.25) # miano
-        sleep(3)
-        pyautogui.leftClick(92, 525,duration=0.25) # part1
-        sleep(2)
-        centr_picture(a, picture)
-        transfer_fanuc()
-        pyautogui.leftClick(92, 540,duration=0.25) # part2
-        sleep(3)
-        transfer_fanuc()
-        pyautogui.leftClick(28, 496,duration=0.25)
-        for process in (process for process in psutil.process_iter() if process.name() == "PttMain.exe"):
-            process.kill()
-        sleep(3)
-        ii += 1
-        flag = check_folder(a, flag, ii)
-    #--------------------------------------
-    ii=0
-    flag=True
-    while flag:
-        a='colchester'
-        logger.info(f'Начало {a}')
-        os.startfile(r'C:\Program Files (x86)\FANUC\Program Transfer Tool\Bin\PttMain.exe')
-        sleep(6)
-        keyb.press_and_release('win + up')#full screen
-        sleep(2)
-        pyautogui.leftClick(106, 513,duration=0.25) # colchester
-        sleep(3)
-        pyautogui.leftClick(92, 541,duration=0.25) # part1
-        sleep(2)
-        centr_picture(a, picture)
-        transfer_fanuc()
-        pyautogui.leftClick(28, 514)
-        for process in (process for process in psutil.process_iter() if process.name() == "PttMain.exe"):
-            process.kill()
-        sleep(3)
-        ii += 1
-        flag = check_folder(a, flag, ii)
-    #--------------------------------------
-    ii=0
-    flag=True
-    while flag:
-        a='nexturn12'
-        logger.info(f'Начало {a}')
-        os.startfile(r'C:\Program Files (x86)\FANUC\Program Transfer Tool\Bin\PttMain.exe')
-        sleep(6)
-        keyb.press_and_release('win + up')#full screen
-        sleep(2)
-        pyautogui.leftClick(106, 549,duration=0.25) # nexturn12
-        sleep(3)
-        pyautogui.leftClick(92, 574,duration=0.25) # part1
-        sleep(2)
-        centr_picture(a, picture)
-        transfer_fanuc()
-        pyautogui.leftClick(92, 591,duration=0.25) # part2
-        sleep(3)
-        transfer_fanuc()
-        pyautogui.leftClick(28, 545,duration=0.25)
-        sleep(3)
-        for process in (process for process in psutil.process_iter() if process.name() == "PttMain.exe"):
-            process.kill()
-        ii += 1
-        flag = check_folder(a, flag, ii)
 
-def sitizen():
+def sitizen(a,dict1):
+    picture_link = r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture'
+    # if a == 'sitizen-1':
+    #     dict1 = {'machine': (1102, 351),
+    #              'pic_machine_lst': (
+    #                  (os.path.join(picture_link, 'citizen1.png'), os.path.join(picture_link, 'citizen12.png')))}
+    # elif a == 'sitizen-2':
+    #     dict1 = {'machine': (1137, 366),
+    #              'pic_machine_lst': (
+    #                  (os.path.join(picture_link, 'citizen2.png'), os.path.join(picture_link, 'citizen22.png')))}
+    # else:
+    #     return False
+
     for process in (process for process in psutil.process_iter() if process.name() == "FileControl.exe"):
         process.kill()
         sleep(4)
-    ii=0
-    flag=True
-    while flag:
-        os.startfile(r'C:\Program Files (x86)\FileControl\FileControl.exe')
-        a = 'sitizen-1'
-        logger.info(f'Начало {a}')
-        sleep(3)
 
-        pyautogui.leftClick(1220, 340,duration=0.25)
-        logger.debug('выбор машины')
-        sleep(2)
-        pyautogui.leftClick(1102, 351,duration=0.25)
-        logger.debug('машина1')
-        sleep(2)
-        pyautogui.leftClick(925, 345,duration=0.25)
-        logger.debug('выбор папки')
-        sleep(2)
+    os.startfile(r'C:\Program Files (x86)\FileControl\FileControl.exe')
+    logger.info(f'Начало {a}')
+    sleep(3)
+
+    pyautogui.leftClick(1220, 340,duration=0.25)
+    logger.debug('выбор машины')
+    sleep(2)
+    pyautogui.leftClick(dict1.get('machine'),duration=0.25)
+    logger.debug(f'выбор станок {a}')
+    sleep(2)
+    pyautogui.leftClick(943, 338,duration=0.25)
+    logger.debug('выбор папки на компе')
+    sleep(2)
+    for x in range(3):
         pyautogui.leftClick(1096, 599)
         logger.debug('клик вниз')
-        sleep(2)
-        pyautogui.leftClick(1096, 599)
-        logger.debug('клик вниз')
-        sleep(2)
-        w=pyautogui.locateCenterOnScreen(r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture\citizen1.png')
-        if w==None:
-            w=pyautogui.locateCenterOnScreen(r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture\citizen12.png')
-        print(w)
-        pyautogui.moveTo(w)
-        pyautogui.leftClick(w)
-        logger.debug('выбор ситизен1')
-        sleep(2)
-        pyautogui.leftClick(1002, 660,duration=0.25)
-        logger.debug('кнопка ок')
-        sleep(2)
-        pyautogui.leftClick(717, 288,duration=0.25)
-        sleep(2)
-        pyautogui.leftClick(767, 334,duration=0.25)
-        sleep(2)
-        pyautogui.leftClick(999, 676,duration=0.25)
-        sleep(2)
-        pyautogui.leftClick(1012, 572,duration=0.25)
-        sleep(2)
-        pyautogui.leftClick(927, 615,duration=0.25)
-        sleep(55)
-        for process in (process for process in psutil.process_iter() if process.name() == "FileControl.exe"):
-            process.kill()
-        ii += 1
-        flag = check_folder(a, flag, ii)
-
-    ii=0
-    flag=True
-    while flag:
         sleep(1)
-        os.startfile(r'C:\Program Files (x86)\FileControl\FileControl.exe')
-        a='sitizen-2'
-        logger.info(f'Начало {a}')
-        pyautogui.moveTo(1220, 340,duration=0.25)
-        logger.debug('выбор машины')
-        sleep(0.5)
-        pyautogui.leftClick(1220, 340)
-        sleep(2)
-        pyautogui.moveTo(1137, 366,duration=0.25)
-        sleep(0.5)
-        pyautogui.leftClick(1137, 366,duration=0.25)
-        logger.debug('машина2')
-        sleep(2)
-        pyautogui.leftClick(943, 338)
-        logger.debug('выбор папки')
-        sleep(2)
-        pyautogui.leftClick(1096, 599)
-        logger.debug('клик вниз')
-        sleep(2)
-        pyautogui.leftClick(1096, 599)
-        logger.debug('клик вниз')
-        sleep(2)
-        pyautogui.leftClick(1096, 599)
-        logger.debug('клик вниз')
-        sleep(2)
-        w = pyautogui.locateCenterOnScreen(r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture\citizen2.png')
-        if w == None:
-            w = pyautogui.locateCenterOnScreen(r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture\citizen22.png')
-        print(w)
-        pyautogui.moveTo(w)
-        pyautogui.leftClick(w)
-        logger.debug('выбор ситизен2')
-        sleep(2)
-        pyautogui.leftClick(1002, 660,duration=0.25)
-        logger.debug('кнопка ок')
-        sleep(2)
-        pyautogui.leftClick(1096,436)
-        logger.debug('клик ввверх')
-        pyautogui.leftClick(1096,436)
-        logger.debug('клик ввверх')
-        pyautogui.leftClick(717, 288)
-        sleep(2)
-        pyautogui.leftClick(767, 334)
-        sleep(2)
-        pyautogui.leftClick(999, 676)
-        sleep(2)
-        pyautogui.leftClick(1012, 572)
-        sleep(2)
-        pyautogui.leftClick(927, 615)
-        sleep(55)
-        for process in (process for process in psutil.process_iter() if process.name() == "FileControl.exe"):
-            process.kill()
-        ii +=1
-        flag = check_folder(a, flag, ii)
+    pic_machine = next((item for item in list(
+        map(lambda x: pyautogui.locateCenterOnScreen(x), dict1.get('pic_machine_lst'))) if item is not None), None)
+    logger.debug(f'вывод = {pic_machine}')
+    i=0
+    while pic_machine==None:
+        sleep(0.1)
+        for x in  dict1.get('pic_machine_lst'):
+            pic_machine=pyautogui.locateCenterOnScreen(x)
+            if pic_machine!=None:
+                break
+            else:
+                i += 1
+                logger.debug(f'счетчик {i} pic2={pic_machine}')
+        if i>10 :
+            logger.debug(f'станок {a} не открывается')
+            return
+    pyautogui.moveTo(pic_machine)
+    pyautogui.leftClick(pic_machine,duration=0.25)
+    logger.debug(f'выбор папки {a}')
+    pyautogui.leftClick(1002, 660,duration=0.25)
+    logger.debug('кнопка ок')
+    sleep(2)
+    pyautogui.leftClick(717, 288,duration=0.25)
+    logger.debug('edit')
+    sleep(2)
+    pyautogui.leftClick(767, 334,duration=0.25)
+    logger.debug(f'select all on machine {a}')
+    sleep(2)
+    pyautogui.leftClick(999, 676,duration=0.25)
+    logger.debug('transfer to pc')
+    sleep(2)
+    pyautogui.leftClick(1012, 572,duration=0.25)
+    logger.debug('да')
+    sleep(2)
+    pyautogui.leftClick(927, 615,duration=0.25)
+    logger.debug('хз')
+    sleep(55)
+    for process in (process for process in psutil.process_iter() if process.name() == "FileControl.exe"):
+        process.kill()
+    return True
 
 
-
-def nomura(a):
+def nomura(a,pic_machine_lst):
     picture_link=r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture'
     picture_lst=(os.path.join(picture_link, 'hat1.png'),os.path.join(picture_link, 'hat2.png'),os.path.join(picture_link, 'hat3.png'))
 
-    if a == 'nomura20-1':
-        pic_machine_lst = (os.path.join(picture_link, 'nom1.png'), os.path.join(picture_link, 'nom11.png'))
-    elif a == 'nomura20-2':
-        pic_machine_lst = (os.path.join(picture_link, 'nom2.png'), os.path.join(picture_link, 'nom22.png'))
-    elif a == 'nomura20-3':
-        pic_machine_lst = (os.path.join(picture_link, 'nom3.png'), os.path.join(picture_link, 'nom33.png'))
-    elif a == 'nomura10':
-        pic_machine_lst = (os.path.join(picture_link, 'nom10.png'), os.path.join(picture_link, 'nom110.png'))
+    # if a == 'nomura20-1':
+    #     pic_machine_lst = (os.path.join(picture_link, 'nom1.png'), os.path.join(picture_link, 'nom11.png'))
+    # elif a == 'nomura20-2':
+    #     pic_machine_lst = (os.path.join(picture_link, 'nom2.png'), os.path.join(picture_link, 'nom22.png'))
+    # elif a == 'nomura20-3':
+    #     pic_machine_lst = (os.path.join(picture_link, 'nom3.png'), os.path.join(picture_link, 'nom33.png'))
+    # elif a == 'nomura10':
+    #     pic_machine_lst = (os.path.join(picture_link, 'nom10.png'), os.path.join(picture_link, 'nom110.png'))
+    # else:
+    #     return False
 
     if windll.user32.OpenClipboard(None):
         windll.user32.EmptyClipboard()
@@ -423,21 +302,20 @@ def nomura(a):
     pyautogui.leftClick(1898, 5,duration=0.25)
     pyautogui.leftClick(1898, 5,duration=0.25)
     sleep(2)
+    return True
 
-
-
-def check_folder(a, flag, i):
-    if os.listdir(os.path.join(set.SOURCE, a)) != []:
-        flag = False
-        logger.info(f'Конец {a}')
-    else:
-        flag = True
-        hh=3
-        logger.info(f'Программы не скинулись {a} осталось {hh - i} попытки')
-        if i == 3:
-            flag = False
-            logger.info(f'количество попыток закончилось {a}')
-    return flag
+# def check_folder(a, flag, i):
+#     if os.listdir(os.path.join(set.SOURCE, a)) != []:
+#         fl = False
+#         logger.info(f'Конец {a}')
+#     else:
+#         fl = True
+#         hh=3
+#         logger.info(f'Программы не скинулись {a} осталось {hh - i} попытки')
+#         if i == 3:
+#             fl = False
+#             logger.info(f'количество попыток закончилось {a}')
+#     return fl
 
 def centr_picture(a,path):
     w = pyautogui.locateCenterOnScreen(path)
