@@ -62,15 +62,26 @@ def update_folder(path, folder):
 #
 def main():
     logger5 = logging.getLogger('telega_logger')
-    logger5.error('Start script')
+    # logger5.error('Start script')
     folders_machine_new_program = (
         'nomura20-1', 'nomura20-2', 'nomura20-3', 'nomura10', 'colchester', 'hanhwa', 'miano', 'nexturn12', 'nexturn26',
         'nomura16', 'sitizen-1', 'sitizen-2', 'NONE')
+
+
 
     logging.config.dictConfig(logger_config)
     logger = logging.getLogger('app_logger')
 
     counter_start1 = time.perf_counter()
+
+    logger.info("Start copy to database ")
+    for program in folders_machine_new_program:
+        copy_to_database(program)
+    logger.info("End copy to database")
+
+    quit()
+
+
 
     if os.path.isfile(set.LOG_FILE): os.remove(set.LOG_FILE)  # log файл
     if os.path.isfile(set.LOG_FILE_DEBUG): os.remove(set.LOG_FILE_DEBUG)  # log файл

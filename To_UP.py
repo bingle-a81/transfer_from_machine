@@ -5,10 +5,12 @@ from settings import logger_config
 import re
 import json
 import get_settings as set
+from typing import NamedTuple
 
 
 logging.config.dictConfig(logger_config)
 logger = logging.getLogger('to_database_logger')
+
 
 
 # ***********************************************************************
@@ -43,14 +45,14 @@ def find_name_prog(path):  # из программы извлекаем имя �
             if ('(' in st) and (')' in st):
                 f_name = st[(st.index('(') + 1):(st.index(')'))].strip()
                 f_name = correction_of_the_line(f_name).strip()
-                # logger.debug(f'name++{f_name}')
+                logger.debug(f'name++{f_name}')
                 return f_name
                 break
             else:
                 pass
         else:
             a = chenge_name(path.split('\\')[-1])  # если в файле названия нет - берем имя файла
-            # logger.debug(f'name=={a}')
+            logger.debug(f'name=={a}')
             return chenge_name(path.split('\\')[-1])
 
 
@@ -126,10 +128,19 @@ def find_name_machine(folder_machine, path):  # ищем название ста
 # -----------------------------------------------------------------------
 
 
+class Attribfiles(NamedTuple):
+    date_of_change:float
+    size_file: int
+
+
 def attrib(file):  # получаем дату изменения  файла и размер
     date_of_change = os.path.getmtime(file)
     size_file = os.path.getsize(file)
-    return [date_of_change, size_file]
+    return Attribfiles(date_of_change, size_file)
+
+def pink(path):
+    print(attrib(path).date_of_change)
+    print(attrib(path).size_file)
 
 
 # -----------------------------------------------------------------------
@@ -162,32 +173,44 @@ def start(folder_machine):
     quantity_new = 0
 
     for file in serch_in_check(os.path.join(set.PATH_FOR_CHECK, folder_machine)):  # ищем файл в папке  со станков
+        logger.debug(f'имя файла {file}')
         file_name_new = file.split('\\')[-1]  # имя файла файла со станков
+        logger.debug(f'имя файла {file_name_new}')
         name_prog = find_name_prog(file)  # парсер названия
         lst = []  # список одинаковых файлов
+
         with open(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json", "r",
                   encoding="utf-8") as jsonFile:
             json_data = json.load(jsonFile)
         if name_prog in json_data:  # если имя файла есть в json-файле - то путь берем оттуда
             # print(json_data[name_prog])
             path_for_base = json_data[name_prog]
+            logger.debug(f'имя файла {json_data[name_prog]}')
         else:
             path_for_base = set.PATH_FOR_BASE  # иначе ищем в базе УП(общий путь)
+            logger.debug(f'имя файла {path_for_base}')
 
         for f in serch_in_base(path_for_base, file_name_new):  # ищем файл в базе программ
+            logger.debug(f'ищем файл в базе программ {f}')
             name_prog_old = find_name_prog(f)  # парсер названия
+            logger.debug(f'парсер названия {name_prog_old }')
             if name_prog_old == name_prog:
                 file_name_old = f
+                logger.debug(f'добовляем в список {file_name_old}')
                 lst.append(file_name_old)  # добовляем в список
+                logger.debug(f'cсписок-- {lst}')
             else:
                 continue
-        print(len(lst))
+        logger.debug(f'общий список {lst}')
+        # print(len(lst))
         name_of_machine = find_name_machine(folder_machine, file)  # парсер станка
+        logger.debug(f'парсер станка {name_of_machine}')
         # logger.error(f'machine={name_of_machine}')
 
         if lst == []:  # если список пустой то файл новый-копируем в папку для новых файлов
             try:
-                date_of_change = time.strftime('%d.%m.%Y', time.gmtime(attrib(file)[0]))
+                date_of_change = time.strftime('%d.%m.%Y', time.gmtime(attrib(file).date_of_change))
+                logger.debug(f'date_of_change {date_of_change}')
                 if os.path.isdir(
                         os.path.join(set.PATH_FOR_COPY_NEW_FILES, name_prog, name_of_machine, date_of_change)) == False:
                     os.makedirs(os.path.join(set.PATH_FOR_COPY_NEW_FILES, name_prog, name_of_machine, date_of_change))
@@ -203,13 +226,15 @@ def start(folder_machine):
                 logger.exception(f'Exception here, item = {item}')
                 pass
         else:
-            flag = all(attrib(i)[1] != attrib(file)[1] for i in lst)  # проверка - изменился ли размер файлов в списке
+            flag = all(attrib(i).size_file != attrib(file).size_file for i in lst)  # проверка - изменился ли размер файлов в списке
+            logger.debug(f'проверка - изменился ли размер файлов в списке {flag} ')
             # logger.error(f'flag={flag}')
             if flag:  # новая версия старой программы
                 try:
+                    logger.debug(f'новая версия старой программы {flag} ')
                     dir_file_old = '\\'.join(file_name_old.split(('\\'))[0:10])  # путь до папки в БД УП
                     # logger.info(f'dir {dir_file_old}')
-                    date_of_change = time.strftime('%d.%m.%Y', time.gmtime(attrib(file)[0]))
+                    date_of_change = time.strftime('%d.%m.%Y', time.gmtime(attrib(file).date_of_change))
                     if os.path.isdir(os.path.join(dir_file_old, name_of_machine, date_of_change)) == False:
                         os.makedirs(os.path.join(dir_file_old, name_of_machine, date_of_change))
                     shutil.copyfile(file, os.path.join(dir_file_old, name_of_machine, date_of_change, file_name_new))
@@ -220,15 +245,16 @@ def start(folder_machine):
 
                     dir_file_old1 = '\\'.join(file_name_old.split(('\\'))[8:10])
                     quantity_change += 1
-                    # logger.info(f'file {name_prog} copied to //{os.path.join(dir_file_old1, name_of_machine, date_of_change, file_name_new)}')
+                    logger.debug(f'file {name_prog} copied to //{os.path.join(dir_file_old1, name_of_machine, date_of_change, file_name_new)}')
                     logger.info(
                         f'file {name_prog} copied to //{dir_file_old}')
                 except:
                     logger.exception(f'Exception here ')
                     pass
             else:  # такая программа уже есть
+                logger.debug(f'такая программа уже есть')
                 quantity_old += 1
-                # logger.info(f'file {name_prog} is {file_name_old}!Dont copy!')
+                logger.debug(f'file {name_prog} is {file_name_old}!Dont copy!')
                 if os.path.isdir(os.path.join(set.ARCHIVE_PROGRAMM, name_prog, name_of_machine)) == False:
                     os.makedirs(os.path.join(set.ARCHIVE_PROGRAMM, name_prog, name_of_machine))
                 shutil.copyfile(file, os.path.join(set.ARCHIVE_PROGRAMM, name_prog, name_of_machine, file_name_new))
@@ -260,6 +286,7 @@ def start(folder_machine):
 # -----------------------------------------------------------------------
 #
 def main():
+    pink(r'c:\Users\Programmer\Desktop\pro\STANKI\debug.log')
     pass
 
 

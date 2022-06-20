@@ -13,10 +13,6 @@ from ctypes import windll
 
 logging.config.dictConfig(logger_config)
 logger = logging.getLogger('pyautogui_logger')
-# err_logger=logging.getLogger('telega_logger')
-
-
-
 
 def transfer_fanuc():
     sleep(0.5)
@@ -42,19 +38,6 @@ def transfer_fanuc():
     sleep(1)
 
 def program_transfer_tool(a,dict1):
-    # if a == 'nexturn26':
-    #     dict1={'machine':(106, 464),'part1':(136, 588),'part2':(136, 603)}
-    # elif a=='hanhwa':
-    #     dict1 = {'machine': (106, 477), 'part1': (92, 510), 'part2': (92,528)}
-    # elif a=='miano':
-    #     dict1 = {'machine': (106, 495), 'part1': (92, 525), 'part2': (92, 540)}
-    # elif a=='colchester':
-    #     dict1 = {'machine': (106, 513), 'part1': (92, 541), 'part2': (92, 540)}
-    # elif a=='nexturn12':
-    #     dict1 = {'machine': (106, 549), 'part1': (92, 574), 'part2': (92, 591)}
-    # else:
-    #     return False
-
     picture = r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture\fanuc_last_mod.png'
     for process in (process for process in psutil.process_iter() if process.name() == "PttMain.exe"):
         process.kill()
@@ -90,17 +73,6 @@ def program_transfer_tool(a,dict1):
 
 def sitizen(a,dict1):
     picture_link = r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture'
-    # if a == 'sitizen-1':
-    #     dict1 = {'machine': (1102, 351),
-    #              'pic_machine_lst': (
-    #                  (os.path.join(picture_link, 'citizen1.png'), os.path.join(picture_link, 'citizen12.png')))}
-    # elif a == 'sitizen-2':
-    #     dict1 = {'machine': (1137, 366),
-    #              'pic_machine_lst': (
-    #                  (os.path.join(picture_link, 'citizen2.png'), os.path.join(picture_link, 'citizen22.png')))}
-    # else:
-    #     return False
-
     for process in (process for process in psutil.process_iter() if process.name() == "FileControl.exe"):
         process.kill()
         sleep(4)
@@ -167,17 +139,6 @@ def sitizen(a,dict1):
 def nomura(a,pic_machine_lst):
     picture_link=r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture'
     picture_lst=(os.path.join(picture_link, 'hat1.png'),os.path.join(picture_link, 'hat2.png'),os.path.join(picture_link, 'hat3.png'))
-
-    # if a == 'nomura20-1':
-    #     pic_machine_lst = (os.path.join(picture_link, 'nom1.png'), os.path.join(picture_link, 'nom11.png'))
-    # elif a == 'nomura20-2':
-    #     pic_machine_lst = (os.path.join(picture_link, 'nom2.png'), os.path.join(picture_link, 'nom22.png'))
-    # elif a == 'nomura20-3':
-    #     pic_machine_lst = (os.path.join(picture_link, 'nom3.png'), os.path.join(picture_link, 'nom33.png'))
-    # elif a == 'nomura10':
-    #     pic_machine_lst = (os.path.join(picture_link, 'nom10.png'), os.path.join(picture_link, 'nom110.png'))
-    # else:
-    #     return False
 
     if windll.user32.OpenClipboard(None):
         windll.user32.EmptyClipboard()
@@ -303,19 +264,6 @@ def nomura(a,pic_machine_lst):
     pyautogui.leftClick(1898, 5,duration=0.25)
     sleep(2)
     return True
-
-# def check_folder(a, flag, i):
-#     if os.listdir(os.path.join(set.SOURCE, a)) != []:
-#         fl = False
-#         logger.info(f'Конец {a}')
-#     else:
-#         fl = True
-#         hh=3
-#         logger.info(f'Программы не скинулись {a} осталось {hh - i} попытки')
-#         if i == 3:
-#             fl = False
-#             logger.info(f'количество попыток закончилось {a}')
-#     return fl
 
 def centr_picture(a,path):
     w = pyautogui.locateCenterOnScreen(path)

@@ -129,7 +129,7 @@ logger_config = {
         },
         'to_database_logger': {
             'level': 'DEBUG',
-            'handlers': ['console', 'file'],
+            'handlers': ['console', 'file', 'file1'],
         },
         'email_logger':{
             'level': 'DEBUG',
