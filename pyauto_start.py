@@ -184,6 +184,7 @@ def nomura(a,pic_machine_lst):
     # sleep(3)
 
     pict_hat = next((item for item in list(map(lambda x: pyautogui.locateCenterOnScreen(x), picture_lst)) if item is not None), None)
+
     logger.debug(f'шапка таблицы {pict_hat}')
     while pict_hat == None:
         sleep(0.1)
@@ -198,13 +199,18 @@ def nomura(a,pic_machine_lst):
         if i > 3:
             logger.debug(f'шапка таблицы не найдена {pict_hat}')
             break
+    if pyautogui.locateCenterOnScreen(os.path.join(picture_link, 'ftp_error.png')) != None:
+        logger.debug(f'ftp error {a}')
+        return
+    else:
+        logger.debug(f'ftp not error {a}')
     i=0
     if pict_hat==None:
         logger.debug(f'выбор режима таблицы')
         sleep(1.5)
         pyautogui.moveTo(1856, 71, duration=0.25)
         pyautogui.leftClick(1856, 71, duration=0.25)
-        pic_table=pyautogui.locateCenterOnScreen(r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture\table.png')
+        pic_table=pyautogui.locateCenterOnScreen(os.path.join(picture_link, 'table.png'))
         while pic_table==None:
             pic_table = pyautogui.locateCenterOnScreen(
                 r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture\table.png')
@@ -218,11 +224,10 @@ def nomura(a,pic_machine_lst):
             logger.debug(f'выбор режима таблицы готово')
 
         logger.debug(f'выбор шапки дата изменения таблицы')
-        izm_table=pyautogui.locateCenterOnScreen(r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture\izm_table.png')
+        izm_table=pyautogui.locateCenterOnScreen(os.path.join(picture_link, 'izm_table.png'))
         i=0
         while izm_table==None:
-            izm_table = pyautogui.locateCenterOnScreen(
-                r'c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\picture\izm_table.png')
+            izm_table = pyautogui.locateCenterOnScreen(os.path.join(picture_link, 'izm_table.png'))
             i += 1
             if i > 5:
                 logger.debug(f'не правильная шапка дата изменения таблицы - не найдено')
@@ -231,7 +236,18 @@ def nomura(a,pic_machine_lst):
             pyautogui.moveTo(izm_table, duration=0.25)
             pyautogui.leftClick(izm_table, duration=0.25)
             logger.debug(f'правильная шапка дата изменения таблицы готово')
-
+        izm_table1=pyautogui.locateCenterOnScreen(os.path.join(picture_link, 'date_of_change_table.png'))
+        i=0
+        while izm_table1==None:
+            izm_table = pyautogui.locateCenterOnScreen(os.path.join(picture_link, 'date_of_change_table.png'))
+            i += 1
+            if i > 3:
+                logger.debug(f'все ок')
+        else:
+            pyautogui.moveTo(izm_table1, duration=0.25)
+            pyautogui.leftClick(izm_table1, duration=0.25)
+            pyautogui.moveTo(228, 356, duration=0.25)
+            logger.debug(f'поменял дату изменения {a}')
         pict_hat = next(
             (item for item in list(map(lambda x: pyautogui.locateCenterOnScreen(x), picture_lst)) if item is not None),
             None)
@@ -239,7 +255,7 @@ def nomura(a,pic_machine_lst):
             logger.debug(f'шапка таблицы не найдена вторая проверка {pict_hat}')
             return
         else:
-            logger.debug(f'шапка таблицы вторая проверка {pict_hat}')
+            logger.debug(f'шапка таблицы найдена вторая проверка {pict_hat}')
     pyautogui.leftClick(214, 126,duration=0.25)  # первая программа
     sleep(1)
     keyb.press('shift')

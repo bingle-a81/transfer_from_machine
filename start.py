@@ -74,21 +74,12 @@ def main():
 
     counter_start1 = time.perf_counter()
 
-    logger.info("Start copy to database ")
-    for program in folders_machine_new_program:
-        copy_to_database(program)
-    logger.info("End copy to database")
-
-    quit()
-
-
-
     if os.path.isfile(set.LOG_FILE): os.remove(set.LOG_FILE)  # log файл
     if os.path.isfile(set.LOG_FILE_DEBUG): os.remove(set.LOG_FILE_DEBUG)  # log файл
 
     if os.path.isfile(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json"):
-        if (time.time()) - os.path.getmtime(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json") > (
-                60 * 60 * 24 * 7):
+        if (time.time()) - os.path.getctime(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json") > (
+                60 * 60 * 24 * 3):
             os.remove(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json")
 
     logger.info(f'Start Transfer_from_machine\n')
@@ -122,7 +113,6 @@ def main():
                         flag = False
                         logger.info(f'количество попыток закончилось {machine}')
             logger.info((f'End {machine}\n'))
-
     logger.info(f'End Transfer_from_machine \n')
     logger5.error(f'End Transfer_from_machine \n')
 

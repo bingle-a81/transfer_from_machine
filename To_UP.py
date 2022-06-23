@@ -45,7 +45,7 @@ def find_name_prog(path):  # из программы извлекаем имя �
             if ('(' in st) and (')' in st):
                 f_name = st[(st.index('(') + 1):(st.index(')'))].strip()
                 f_name = correction_of_the_line(f_name).strip()
-                logger.debug(f'name++{f_name}')
+                # logger.debug(f'name++{f_name}')
                 return f_name
                 break
             else:
