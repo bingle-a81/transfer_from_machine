@@ -62,7 +62,7 @@ def update_folder(path, folder):
 #
 def main():
     logger5 = logging.getLogger('telega_logger')
-    # logger5.error('Start script')
+    logger5.error('Start script')
     folders_machine_new_program = (
         'nomura20-1', 'nomura20-2', 'nomura20-3', 'nomura10', 'colchester', 'hanhwa', 'miano', 'nexturn12', 'nexturn26',
         'nomura16', 'sitizen-1', 'sitizen-2', 'NONE')
@@ -77,10 +77,6 @@ def main():
     if os.path.isfile(set.LOG_FILE): os.remove(set.LOG_FILE)  # log файл
     if os.path.isfile(set.LOG_FILE_DEBUG): os.remove(set.LOG_FILE_DEBUG)  # log файл
 
-    if os.path.isfile(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json"):
-        if (time.time()) - os.path.getctime(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json") > (
-                60 * 60 * 24 * 3):
-            os.remove(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json")
 
     logger.info(f'Start Transfer_from_machine\n')
     counter_start2 = time.perf_counter()
@@ -129,10 +125,21 @@ def main():
         trans_other_macine(set.SOURCE, machine)
         logger.info(f'End join {machine}')
 
-    logger.info("Start json")
-    chek_json(set.PATH_FOR_BASE)
-    logger.info("end json")
-    logger5.error(f'End json \n')
+    if os.path.isfile(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json"):
+        if (time.time()) - os.path.getctime(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json") > (
+                60 * 60 * 24 * 3):
+            os.remove(r"c:\Users\Programmer\PycharmProjects\Transfer_From_Machine\guide.json")
+            logger.info("Update file json")
+            chek_json(set.PATH_FOR_BASE)
+            logger.info("end json")
+            logger5.error(f'End json \n')
+        else:
+            logger.info("json don't update")
+    else:
+        logger.info("Create file json")
+        chek_json(set.PATH_FOR_BASE)
+        logger.info("end json")
+        logger5.error(f'End json \n')
 
     logger.info("Start copy to database ")
     for program in folders_machine_new_program:
