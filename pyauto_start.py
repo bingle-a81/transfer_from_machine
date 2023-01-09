@@ -243,6 +243,7 @@ def nomura(a,pic_machine_lst):
             i += 1
             if i > 3:
                 logger.debug(f'все ок')
+                break
         else:
             pyautogui.moveTo(izm_table1, duration=0.25)
             pyautogui.leftClick(izm_table1, duration=0.25)
