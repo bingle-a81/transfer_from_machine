@@ -21,7 +21,7 @@ def trans_from_machine(machine):
         pic_machine_lst = (os.path.join(picture_link, 'nom3.png'), os.path.join(picture_link, 'nom33.png'))
         pyauto_start.nomura(machine, pic_machine_lst)
     elif machine == 'nomura20-4':
-        pic_machine_lst = (os.path.join(picture_link, 'nom3.png'), os.path.join(picture_link, 'nom33.png'))
+        pic_machine_lst = (os.path.join(picture_link, 'nom4.png'), os.path.join(picture_link, 'nom44.png'))
         pyauto_start.nomura(machine, pic_machine_lst)
     elif machine == 'nomura10':
         pic_machine_lst = (os.path.join(picture_link, 'nom10.png'), os.path.join(picture_link, 'nom110.png'))
