@@ -61,9 +61,11 @@ def find_name_prog(path):  # из программы извлекаем имя �
 def find_name_machine(folder_machine, path):  # ищем название станка
     a=''
     lisst = ['nomura20-1', 'nomura20-2', 'nomura20-3']
+    lisst1 = ['nomura20-4', 'nomura20-5']
+    lisst2 = ['nexturn12-1', 'nexturn12-2']
     if any([i == folder_machine for i in lisst]):
         a = 'NOMURA-20J2'
-    elif folder_machine == 'nomura20-4':
+    elif  any([i == folder_machine for i in lisst1]):
         a = 'NOMURA-20J3'
     elif folder_machine == 'nomura10':
         a = 'NOMURA-10E'
@@ -73,14 +75,14 @@ def find_name_machine(folder_machine, path):  # ищем название ста
         a = 'HANHWA-XDH20'
     elif folder_machine == 'miano':
         a = 'MIYANO-BNJ42SY'
-    elif folder_machine == 'nexturn12-1':
-        a = 'NEXTURN-12B'
-    elif folder_machine == 'nexturn12-2':
+    elif any([i == folder_machine for i in lisst2]):
         a = 'NEXTURN-12B'
     elif folder_machine == 'nexturn26':
         a = 'NEXTURN-26PY'
     elif folder_machine == 'nomura16':
         a = 'NOMURA-16UBS'
+    elif folder_machine == 'Tsugami-SS263':
+        a = 'TSUGAMI-SS263'
     elif folder_machine == 'sitizen-1':
         a = 'CITIZEN-L12(1)'
     elif folder_machine == 'sitizen-2':

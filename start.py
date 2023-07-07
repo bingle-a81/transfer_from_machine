@@ -23,6 +23,9 @@ def trans_from_machine(machine):
     elif machine == 'nomura20-4':
         pic_machine_lst = (os.path.join(picture_link, 'nom4.png'), os.path.join(picture_link, 'nom44.png'))
         pyauto_start.nomura(machine, pic_machine_lst)
+    elif machine == 'nomura20-5':
+        pic_machine_lst = (os.path.join(picture_link, 'nom5.png'), os.path.join(picture_link, 'nom55.png'))
+        pyauto_start.nomura(machine, pic_machine_lst)
     elif machine == 'nomura10':
         pic_machine_lst = (os.path.join(picture_link, 'nom10.png'), os.path.join(picture_link, 'nom110.png'))
         pyauto_start.nomura(machine, pic_machine_lst)
@@ -43,6 +46,9 @@ def trans_from_machine(machine):
         pyauto_start.program_transfer_tool(machine, dict1)
     elif machine == 'nexturn12-2':
         dict1 = {'machine': (101, 522), 'part1': (92, 558), 'part2': (92, 573)}
+        pyauto_start.program_transfer_tool(machine, dict1)
+    elif machine == 'Tsugami-SS263':
+        dict1 = {'machine': (101, 554), 'part1': (130, 700), 'part2': (130, 715)}
         pyauto_start.program_transfer_tool(machine, dict1)
     elif machine == 'sitizen-1':
         dict1 = {'machine': (1102, 351),
@@ -69,10 +75,10 @@ def update_folder(path, folder):
 def main():
 
     logger5 = logging.getLogger('telega_logger')
-    logger5.error('Start script')
+    # logger5.error('Start script')
     folders_machine_new_program = (
-        'nomura20-1', 'nomura20-2', 'nomura20-3', 'nomura20-4', 'nomura10', 'colchester', 'hanhwa', 'miano', 'nexturn12-1',
-        'nexturn12-2','nexturn26','nomura16', 'sitizen-1', 'sitizen-2', 'NONE')
+        'nomura20-1', 'nomura20-2', 'nomura20-3', 'nomura20-4','nomura20-5', 'nomura10', 'colchester', 'hanhwa', 'miano', 'nexturn12-1',
+        'nexturn12-2','nexturn26','Tsugami-SS263','nomura16', 'sitizen-1', 'sitizen-2','NONE')
 
     logging.config.dictConfig(logger_config)
     logger = logging.getLogger('app_logger')
@@ -92,7 +98,7 @@ def main():
         else:
             update_folder(set.SOURCE, machine)
             update_folder(set.PATH_FOR_CHECK, machine)
-    for machine in folders_machine_new_program:
+    for machine in folders_machine_new_program[12:13]:
         if (machine == 'nomura16') or (machine == 'NONE'):
             pass
         else:
@@ -118,14 +124,14 @@ def main():
     logger5.error(f'End Transfer_from_machine \n')
 
     logger.info(f'Start join nomura')
-    for machine in folders_machine_new_program[:5]:
+    for machine in folders_machine_new_program[:6]:
         logger.info(f'Start join {machine}')
         common_files_nomura(set.SOURCE, machine)
         logger.info(f'End join {machine}')
     logger.info(f'End join nomura')
 
     logger.info(f'Start other machine')
-    for machine in folders_machine_new_program[5:]:
+    for machine in folders_machine_new_program[6:]:
         logger.info(f'Start join {machine}')
         trans_other_macine(set.SOURCE, machine)
         logger.info(f'End join {machine}')
