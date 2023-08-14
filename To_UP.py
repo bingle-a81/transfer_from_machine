@@ -10,7 +10,7 @@ from typing import NamedTuple
 
 logging.config.dictConfig(logger_config)
 logger = logging.getLogger('to_database_logger')
-
+logger1=logging.getLogger('telega_logger')
 
 
 # ***********************************************************************
@@ -229,7 +229,8 @@ def start(folder_machine):
                 logger.info(f'file {name_prog} is new!!')
 
             except:
-                logger.exception(f'Exception here, item = {item}')
+                logger.exception(f'Exception here, item = {name_prog}')
+                logger1.exception(f'Exception here, item = {name_prog}')
                 pass
         else:
             flag = all(attrib(i).size_file != attrib(file).size_file for i in lst)  # проверка - изменился ли размер файлов в списке
@@ -256,6 +257,7 @@ def start(folder_machine):
                         f'file {name_prog} copied to //{dir_file_old}')
                 except:
                     logger.exception(f'Exception here ')
+                    logger1.exception(f'Exception here, item = {name_prog}')
                     pass
             else:  # такая программа уже есть
                 logger.debug(f'такая программа уже есть')

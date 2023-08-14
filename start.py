@@ -75,7 +75,7 @@ def update_folder(path, folder):
 def main():
 
     logger5 = logging.getLogger('telega_logger')
-    # logger5.error('Start script')
+    logger5.error('Start script')
     folders_machine_new_program = (
         'nomura20-1', 'nomura20-2', 'nomura20-3', 'nomura20-4','nomura20-5', 'nomura10', 'colchester', 'hanhwa', 'miano', 'nexturn12-1',
         'nexturn12-2','nexturn26','Tsugami-SS263','nomura16', 'sitizen-1', 'sitizen-2','NONE')
@@ -98,7 +98,7 @@ def main():
         else:
             update_folder(set.SOURCE, machine)
             update_folder(set.PATH_FOR_CHECK, machine)
-    for machine in folders_machine_new_program[12:13]:
+    for machine in folders_machine_new_program:
         if (machine == 'nomura16') or (machine == 'NONE'):
             pass
         else:
@@ -168,7 +168,7 @@ def main():
         text = r.read()
     logger1.error(text)
 
-    os.system('shutdown -r -t 100')
+    # os.system('shutdown -r -t 100')
 
 
 # -----------------------------------------------------------------------
