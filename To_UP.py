@@ -164,6 +164,8 @@ def chenge_name(st=''):  # удаляем расширение файла
 def correction_of_the_line(string):  # удаляем символы кроме букв,цифр и точки
     reg = re.compile('[^a-zA-Z0-9. -]')
     a = reg.sub('', string)
+    a=a.strip()
+    a=a.rstrip('.')
     return a
 
 
