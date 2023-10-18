@@ -156,7 +156,14 @@ def nomura(a,pic_machine_lst):
     keyb.press_and_release('win + up')  # full screen
     logger.debug(f'full screen {a}')
     sleep(1)
-    pic_machine = next((item for item in list(map(lambda x: pyautogui.locateCenterOnScreen(x),pic_machine_lst)) if item is not None), None)
+    pyautogui.moveTo(245, 129,duration=0.25)
+    sleep(2)
+    pyautogui.doubleClick(245, 129,button='LEFT',duration=0.25)
+    logger.debug(f'открыть subnet')
+    pyautogui.moveTo(719, 974, duration=0.25)
+    sleep(1)
+    pyautogui.leftClick(719, 974,)
+    pic_machine = next((item for item in list(map(lambda x: pyautogui.locateOnScreen(x,region=(164,104,240,200), confidence=0.95),pic_machine_lst)) if item is not None), None)
     logger.debug(f'вывод = {pic_machine}')
     i=0
     while pic_machine==None:
@@ -178,8 +185,8 @@ def nomura(a,pic_machine_lst):
     # pyautogui.doubleClick(x, y, button='LEFT',duration=0.25)#координаты папки
     sleep(1)
     for x in range(3):
-        pyautogui.doubleClick(214, 126,button='LEFT',duration=0.25)
-        sleep(1)
+        pyautogui.doubleClick(214, 126,button='LEFT',duration=0.45)
+        sleep(2)
     pyautogui.moveTo(300,200,duration=0.25)
     # sleep(3)
 
