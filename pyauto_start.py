@@ -156,9 +156,11 @@ def nomura(a,pic_machine_lst):
     keyb.press_and_release('win + up')  # full screen
     logger.debug(f'full screen {a}')
     sleep(1)
-    pyautogui.moveTo(245, 129,duration=0.25)
-    sleep(2)
-    pyautogui.doubleClick(245, 129,button='LEFT',duration=0.25)
+    # pyautogui.moveTo(245, 129,duration=0.25)
+    # sleep(2)
+    pict=pyautogui.locateOnScreen(os.path.join(picture_link, 'subnet.png'),region=(164,104,240,200), confidence=0.95)
+    pyautogui.moveTo(pict)
+    pyautogui.doubleClick(pict,button='LEFT',duration=0.25)
     logger.debug(f'открыть subnet')
     pyautogui.moveTo(719, 974, duration=0.25)
     sleep(1)
@@ -243,6 +245,7 @@ def nomura(a,pic_machine_lst):
             pyautogui.moveTo(izm_table, duration=0.25)
             pyautogui.leftClick(izm_table, duration=0.25)
             logger.debug(f'правильная шапка дата изменения таблицы готово')
+            pyautogui.moveTo(228, 356, duration=0.25)
         izm_table1=pyautogui.locateCenterOnScreen(os.path.join(picture_link, 'date_of_change_table.png'))
         i=0
         while izm_table1==None:
