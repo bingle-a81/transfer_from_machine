@@ -101,7 +101,7 @@ def main():
         else:
             update_folder(set.SOURCE, machine)
             update_folder(set.PATH_FOR_CHECK, machine)
-    for machine in folders_machine_new_program[5:6]:
+    for machine in folders_machine_new_program:
         if (machine == 'nomura16') or (machine == 'NONE'):
             pass
         else:
