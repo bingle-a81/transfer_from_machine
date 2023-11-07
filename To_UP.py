@@ -67,6 +67,8 @@ def find_name_machine(folder_machine, path):  # ищем название ста
         a = 'NOMURA-20J2'
     elif  any([i == folder_machine for i in lisst1]):
         a = 'NOMURA-20J3'
+    elif folder_machine == 'nomura20-6':
+        a = 'NOMURA-20J3XB'
     elif folder_machine == 'nomura10':
         a = 'NOMURA-10E'
     elif folder_machine == 'colchester':
