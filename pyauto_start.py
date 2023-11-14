@@ -247,19 +247,19 @@ def nomura(a,pic_machine_lst):
             pyautogui.leftClick(izm_table, duration=0.25)
             logger.debug(f'правильная шапка дата изменения таблицы готово')
             pyautogui.moveTo(228, 356, duration=0.25)
-        izm_table1=pyautogui.locateCenterOnScreen(os.path.join(picture_link, 'date_of_change_table.png'))
-        i=0
-        while izm_table1==None:
-            izm_table = pyautogui.locateCenterOnScreen(os.path.join(picture_link, 'date_of_change_table.png'))
-            i += 1
-            if i > 3:
-                logger.debug(f'все ок')
-                break
-        else:
-            pyautogui.moveTo(izm_table1, duration=0.25)
-            pyautogui.leftClick(izm_table1, duration=0.25)
-            pyautogui.moveTo(228, 356, duration=0.25)
-            logger.debug(f'поменял дату изменения {a}')
+        # izm_table1=pyautogui.locateCenterOnScreen(os.path.join(picture_link, 'date_of_change_table.png'))
+        # i=0
+        # while izm_table1==None:
+        #     izm_table1 = pyautogui.locateCenterOnScreen(os.path.join(picture_link, 'date_of_change_table.png'))
+        #     i += 1
+        #     if i > 3:
+        #         logger.debug(f'все ок')
+        #         break
+        # else:
+        #     pyautogui.moveTo(izm_table1, duration=0.25)
+        #     pyautogui.leftClick(izm_table1, duration=0.25)
+        #     pyautogui.moveTo(228, 356, duration=0.25)
+        #     logger.debug(f'поменял дату изменения {a}')
         pict_hat = next(
             (item for item in list(map(lambda x: pyautogui.locateCenterOnScreen(x), picture_lst)) if item is not None),
             None)
