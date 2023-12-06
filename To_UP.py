@@ -64,11 +64,11 @@ def find_name_machine(folder_machine, path):  # ищем название ста
     lisst1 = ['nomura20-4', 'nomura20-5']
     lisst2 = ['nexturn12-1', 'nexturn12-2']
     if any([i == folder_machine for i in lisst]):
-        a = 'NOMURA-20J2'
+        a = 'NOMURA-20J2(1,2,3)'
     elif  any([i == folder_machine for i in lisst1]):
-        a = 'NOMURA-20J3'
+        a = 'NOMURA-20J3(4,5)'
     elif folder_machine == 'nomura20-6':
-        a = 'NOMURA-20J3XB'
+        a = 'NOMURA-20J3XB(6)'
     elif folder_machine == 'nomura10':
         a = 'NOMURA-10E'
     elif folder_machine == 'colchester':
@@ -85,6 +85,8 @@ def find_name_machine(folder_machine, path):  # ищем название ста
         a = 'NOMURA-16UBS'
     elif folder_machine == 'Tsugami-SS263':
         a = 'TSUGAMI-SS263'
+    elif folder_machine == 'Tsugami-M08SY':
+        a = 'Tsugami-M08SY'
     elif folder_machine == 'sitizen-1':
         a = 'CITIZEN-L12(1)'
     elif folder_machine == 'sitizen-2':

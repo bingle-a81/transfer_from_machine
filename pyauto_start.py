@@ -57,7 +57,7 @@ def program_transfer_tool(a,dict1):
     # pyautogui.leftClick(1074, 447,duration=0.25)#последняя модификация
     # sleep(3)
     transfer_fanuc()
-    if a!='colchester':
+    if a not in ('colchester','Tsugami-M08SY'):
         pyautogui.moveTo(dict1.get('part2'))
         pyautogui.leftClick(dict1.get('part2'), duration=0.25)  # part2
         sleep(3)
