@@ -148,9 +148,11 @@ def nomura(a,pic_machine_lst):
     pyautogui.leftClick(1914, 1067,duration=0.25)
     logger.debug(f'свернуть все')
     # a100=pyautogui.locateOnScreen(os.path.join(picture_link, 'ncexploer.png'),region=(650,750,750,850), confidence=0.95)
-    pyautogui.moveTo(717, 818,duration=0.25)
+    # pyautogui.moveTo(717, 818,duration=0.25)715, 867
+    a101=(717, 868,)
+    pyautogui.moveTo(a101, duration=0.25)
     sleep(2)
-    pyautogui.doubleClick(717, 818,button='LEFT',duration=0.25)
+    pyautogui.doubleClick(a101,button='LEFT',duration=0.25)
     logger.debug(f'открыть nc exploer')
     # pyautogui.doubleClick(button="LEFT")
     sleep(5)

@@ -174,7 +174,7 @@ def main():
         text = r.read()
     logger1.error(text)
 
-    os.system('shutdown -r -t 100')
+    # os.system('shutdown -r -t 100')
 
 
 # -----------------------------------------------------------------------
