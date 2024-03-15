@@ -72,7 +72,7 @@ def find_name_machine(folder_machine, path):  # ищем название ста
     elif folder_machine == 'nomura10':
         a = 'NOMURA-10E'
     elif folder_machine == 'colchester':
-        a = 'COLCHESTER'
+        a = 'COLCHESTER-T8MSY'
     elif folder_machine == 'hanhwa':
         a = 'HANHWA-XDH20'
     elif folder_machine == 'miano':
@@ -84,9 +84,11 @@ def find_name_machine(folder_machine, path):  # ищем название ста
     elif folder_machine == 'nomura16':
         a = 'NOMURA-16UBS'
     elif folder_machine == 'Tsugami-SS263':
-        a = 'TSUGAMI-SS263'
+        a = 'TSUGAMI-SS263-III'
     elif folder_machine == 'Tsugami-M08SY':
-        a = 'Tsugami-M08SY'
+        a = 'Tsugami-M08SY-II'
+    elif folder_machine == 'Tsugami-BO126TF':
+        a = 'Tsugami-BO126TF-III'
     elif folder_machine == 'sitizen-1':
         a = 'CITIZEN-L12(1)'
     elif folder_machine == 'sitizen-2':
