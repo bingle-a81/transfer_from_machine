@@ -56,6 +56,9 @@ def trans_from_machine(machine):
     elif machine == 'Tsugami-M08SY':
         dict1 = {'machine': (101, 576), 'part1': (89, 606), 'part2': (89, 606)}
         pyauto_start.program_transfer_tool(machine, dict1)
+    elif machine == 'Tsugami-BO126TF':
+        dict1 = {'machine': (101, 588), 'part1': (89, 621), 'part2': (89, 636)}
+        pyauto_start.program_transfer_tool(machine, dict1)
     elif machine == 'sitizen-1':
         dict1 = {'machine': (1102, 351),
                  'pic_machine_lst': (
@@ -82,9 +85,10 @@ def main():
 
     logger5 = logging.getLogger('telega_logger')
     logger5.error('Start script')
+
     folders_machine_new_program = ('nomura10',
         'nomura20-1', 'nomura20-2', 'nomura20-3', 'nomura20-4','nomura20-5','nomura20-6',  'colchester', 'hanhwa', 'miano', 'nexturn12-1',
-        'nexturn12-2','nexturn26','Tsugami-SS263','Tsugami-M08SY','nomura16', 'sitizen-1', 'sitizen-2','NONE')
+        'nexturn12-2','nexturn26','Tsugami-SS263','Tsugami-M08SY','Tsugami-BO126TF','nomura16', 'sitizen-1', 'sitizen-2','NONE')
 
     logging.config.dictConfig(logger_config)
     logger = logging.getLogger('app_logger')
@@ -174,7 +178,7 @@ def main():
         text = r.read()
     logger1.error(text)
 
-    os.system('shutdown -r -t 100')
+    # os.system('shutdown -r -t 100')
 
 
 # -----------------------------------------------------------------------
